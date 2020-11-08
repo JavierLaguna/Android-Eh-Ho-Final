@@ -18,6 +18,6 @@ data class TopicList(
 	val moreTopicsUrl: String? = null,
 
 	@field:SerializedName("topics")
-	val topics: List<Topic?>? = null
+	val topics: List<Topic>? = null
 
 ) : Serializable

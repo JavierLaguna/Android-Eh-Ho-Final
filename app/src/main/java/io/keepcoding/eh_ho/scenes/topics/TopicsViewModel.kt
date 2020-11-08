@@ -2,6 +2,7 @@ package io.keepcoding.eh_ho.scenes.topics
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
+import io.keepcoding.eh_ho.models.Topic
 import io.keepcoding.eh_ho.repositories.TopicsRepository
 import io.keepcoding.eh_ho.repositories.services.DiscourseService
 import io.keepcoding.eh_ho.repositories.services.TopicsServiceImpl
@@ -16,14 +17,16 @@ class TopicsViewModel(private val context: Application) : ViewModel() {
     private var isLoading = false
         set(value) {
             field = value
-//            delegate?.updateLoadingState(value)
+            delegate?.updateLoadingState(value)
         }
+    private val topics = mutableListOf<Topic>()
 
-//    var delegate: AddCitiesViewModelDelegate? = null
+    var delegate: TopicsViewModelDelegate? = null
 
     fun refreshTopics() {
         nextPageUrl = null
-//        topicViewModels = [TopicPinnedCellViewModel()]
+        topics.clear()
+        delegate?.updateTopics(topics)
 
         fetchTopics()
     }
@@ -31,17 +34,25 @@ class TopicsViewModel(private val context: Application) : ViewModel() {
     private fun fetchTopics() {
         isLoading = true
 
-        topicsRepository.getLatestTopics(object : DiscourseService.CallbackResponse<LatestTopicsResponse> {
+        topicsRepository.getLatestTopics(object :
+            DiscourseService.CallbackResponse<LatestTopicsResponse> {
 
-                override fun onResponse(response: LatestTopicsResponse) {
-//                    cities = response
-                    isLoading = false
+            override fun onResponse(response: LatestTopicsResponse) {
+                response.topicList?.let {
+                    it.topics?.let { newTopics ->
+                        topics.addAll(newTopics)
+                        delegate?.updateTopics(topics)
+                    }
+                    nextPageUrl = it.moreTopicsUrl
                 }
 
-                override fun onFailure(t: Throwable, res: Response<*>?) {
-//                    delegate?.showError()
-                    isLoading = false
-                }
-            })
+                isLoading = false
+            }
+
+            override fun onFailure(t: Throwable, res: Response<*>?) {
+                delegate?.onErrorGettingTopics()
+                isLoading = false
+            }
+        })
     }
 }

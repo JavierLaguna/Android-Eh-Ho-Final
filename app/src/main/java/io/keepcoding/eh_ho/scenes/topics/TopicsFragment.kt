@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_topics.viewLoading
 import kotlinx.android.synthetic.main.view_error.*
 import java.lang.IllegalArgumentException
 
-class TopicsFragment : Fragment() {
+class TopicsFragment : Fragment(), TopicsViewModelDelegate {
 
     private val viewModel: TopicsViewModel by lazy {
         val factory = CustomViewModelFactory(activity!!.application, this)
@@ -60,22 +60,8 @@ class TopicsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        buttonCreate.setOnClickListener {
-            topicsInteractionListener?.onCreateTopic()
-        }
-
-        buttonRetry.setOnClickListener {
-            retryLoadTopics()
-        }
-
-        swipeRefresh.setOnRefreshListener {
-            viewModel.refreshTopics()
-        }
-
-        listTopics.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        listTopics.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        listTopics.adapter = topicsAdapter
+        initialize()
+        setListeners()
     }
 
     override fun onResume() {
@@ -102,19 +88,29 @@ class TopicsFragment : Fragment() {
         topicsInteractionListener = null
     }
 
-//    private fun loadTopics() {
-//        context?.let {
-//            enableLoading()
-//            TopicsRepo.getTopics(it.applicationContext, {
-//                topicsAdapter.setTopics(it)
-//                enableLoading(false)
-//                swipeRefresh.isRefreshing = false
-//            }, {
-//                swipeRefresh.isRefreshing = false
-//                showError()
-//            })
-//        }
-//    }
+    private fun initialize() {
+        viewModel.delegate = this
+
+        listTopics.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        listTopics.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        listTopics.adapter = topicsAdapter
+    }
+
+    private fun setListeners() {
+        buttonCreate.setOnClickListener {
+            topicsInteractionListener?.onCreateTopic()
+        }
+
+        buttonRetry.setOnClickListener {
+            retryLoadTopics()
+        }
+
+        swipeRefresh.setOnRefreshListener {
+            swipeRefresh.isRefreshing = true
+            viewModel.refreshTopics()
+        }
+    }
 
     private fun enableLoading(enabled: Boolean = true) {
         if (enabled) {
@@ -129,6 +125,8 @@ class TopicsFragment : Fragment() {
     }
 
     private fun showError(show: Boolean = true) {
+        swipeRefresh.isRefreshing = false
+
         if (show) {
             viewError.visibility = View.VISIBLE
             buttonCreate.visibility = View.VISIBLE
@@ -148,6 +146,20 @@ class TopicsFragment : Fragment() {
         fun onCreateTopic()
         fun onShowPosts(topic: Topic)
         fun onLogout()
+    }
+
+    // TopicsViewModelDelegate
+    override fun updateTopics(topics: List<Topic>) {
+        topicsAdapter.setTopics(topics)
+        swipeRefresh.isRefreshing = false
+    }
+
+    override fun updateLoadingState(show: Boolean) {
+        enableLoading(show)
+    }
+
+    override fun onErrorGettingTopics() {
+        showError()
     }
 }
 
