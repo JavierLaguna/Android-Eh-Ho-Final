@@ -4,8 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import io.keepcoding.eh_ho.*
-import io.keepcoding.eh_ho.data.Topic
+import io.keepcoding.eh_ho.models.Topic
 import io.keepcoding.eh_ho.data.UserRepo
+import io.keepcoding.eh_ho.scenes.createTopic.CreateTopicFragment
 import io.keepcoding.eh_ho.scenes.login.LoginActivity
 import io.keepcoding.eh_ho.scenes.posts.EXTRA_TOPIC_ID
 import io.keepcoding.eh_ho.scenes.posts.EXTRA_TOPIC_TITLE

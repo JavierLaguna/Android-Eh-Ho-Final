@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.keepcoding.eh_ho.R
-import io.keepcoding.eh_ho.data.Topic
+import io.keepcoding.eh_ho.models.Topic
 import io.keepcoding.eh_ho.utils.inflate
 import kotlinx.android.synthetic.main.item_topic.view.*
 import java.util.*
