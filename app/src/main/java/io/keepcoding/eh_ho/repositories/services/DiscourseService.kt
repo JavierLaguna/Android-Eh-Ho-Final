@@ -29,7 +29,7 @@ class DiscourseService {
         val retrofit = Retrofit.Builder()
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BuildConfig.DiscourseDomain)
+            .baseUrl(BuildConfig.DiscourseDomainNew) // TODO: Change DiscourseDomainNew
             .build()
 
         topicsApi = retrofit.create(TopicsApi::class.java)

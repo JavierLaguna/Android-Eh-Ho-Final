@@ -18,6 +18,7 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         buildConfigField "String", "DiscourseDomain", DiscourseDomain
+        buildConfigField "String", "DiscourseDomainNew", DiscourseDomainNew
         buildConfigField "String", "DiscourseApiKey", DiscourseApiKey
     }
 

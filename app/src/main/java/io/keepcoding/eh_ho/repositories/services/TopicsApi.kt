@@ -8,7 +8,7 @@ import retrofit2.http.Headers
 
 interface TopicsApi {
 
-    @GET("latest.json")
+    @GET("/latest.json")
     @Headers("Content-Type: application/json")
     fun getTopics(): Call<LatestTopicsResponse>
 

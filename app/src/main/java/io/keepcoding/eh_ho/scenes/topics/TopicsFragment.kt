@@ -7,12 +7,13 @@ import android.view.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.models.Topic
-import io.keepcoding.eh_ho.data.TopicsRepo
+import io.keepcoding.eh_ho.utils.CustomViewModelFactory
 import io.keepcoding.eh_ho.utils.inflate
 import kotlinx.android.synthetic.main.fragment_topics.*
 import kotlinx.android.synthetic.main.fragment_topics.viewLoading
@@ -21,14 +22,17 @@ import java.lang.IllegalArgumentException
 
 class TopicsFragment : Fragment() {
 
-    var topicsInteractionListener: TopicsInteractionListener? = null
-
+    private val viewModel: TopicsViewModel by lazy {
+        val factory = CustomViewModelFactory(activity!!.application, this)
+        ViewModelProvider(this, factory).get(TopicsViewModel::class.java)
+    }
     private val topicsAdapter: TopicsAdapter by lazy {
         val adapter = TopicsAdapter {
             topicsInteractionListener?.onShowPosts(it)
         }
         adapter
     }
+    private var topicsInteractionListener: TopicsInteractionListener? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -65,7 +69,7 @@ class TopicsFragment : Fragment() {
         }
 
         swipeRefresh.setOnRefreshListener {
-            loadTopics()
+            viewModel.refreshTopics()
         }
 
         listTopics.layoutManager =
@@ -77,7 +81,7 @@ class TopicsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        loadTopics()
+        viewModel.refreshTopics()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -98,19 +102,19 @@ class TopicsFragment : Fragment() {
         topicsInteractionListener = null
     }
 
-    private fun loadTopics() {
-        context?.let {
-            enableLoading()
-            TopicsRepo.getTopics(it.applicationContext, {
-                topicsAdapter.setTopics(it)
-                enableLoading(false)
-                swipeRefresh.isRefreshing = false
-            }, {
-                swipeRefresh.isRefreshing = false
-                showError()
-            })
-        }
-    }
+//    private fun loadTopics() {
+//        context?.let {
+//            enableLoading()
+//            TopicsRepo.getTopics(it.applicationContext, {
+//                topicsAdapter.setTopics(it)
+//                enableLoading(false)
+//                swipeRefresh.isRefreshing = false
+//            }, {
+//                swipeRefresh.isRefreshing = false
+//                showError()
+//            })
+//        }
+//    }
 
     private fun enableLoading(enabled: Boolean = true) {
         if (enabled) {
@@ -137,7 +141,7 @@ class TopicsFragment : Fragment() {
 
     private fun retryLoadTopics() {
         showError(false)
-        loadTopics()
+        viewModel.refreshTopics()
     }
 
     interface TopicsInteractionListener {
