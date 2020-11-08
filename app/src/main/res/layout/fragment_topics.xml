@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".topics.TopicsFragment">
+    tools:context=".scenes.topics.TopicsFragment">
 
     <include
         android:id="@+id/viewLoading"
@@ -43,7 +43,7 @@
             android:layout_marginBottom="32dp"
             app:layout_anchor="@id/listTopics"
             app:layout_anchorGravity="bottom|right|end"
-            app:layout_behavior="io.keepcoding.eh_ho.topics.ScrollAwareFABBehavior"
+            app:layout_behavior=".scenes.topics.ScrollAwareFABBehavior"
             app:srcCompat="@drawable/ic_add" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

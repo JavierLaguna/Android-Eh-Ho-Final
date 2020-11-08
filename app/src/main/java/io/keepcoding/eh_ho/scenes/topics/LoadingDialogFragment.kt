@@ -1,4 +1,4 @@
-package io.keepcoding.eh_ho.topics
+package io.keepcoding.eh_ho.scenes.topics
 
 import android.os.Bundle
 import android.view.LayoutInflater

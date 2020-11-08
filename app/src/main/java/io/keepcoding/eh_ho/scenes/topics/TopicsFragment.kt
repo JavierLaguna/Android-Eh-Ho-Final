@@ -1,4 +1,4 @@
-package io.keepcoding.eh_ho.topics
+package io.keepcoding.eh_ho.scenes.topics
 
 import android.content.Context
 import android.os.Bundle
@@ -13,7 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.Topic
 import io.keepcoding.eh_ho.data.TopicsRepo
-import io.keepcoding.eh_ho.inflate
+import io.keepcoding.eh_ho.utils.inflate
 import kotlinx.android.synthetic.main.fragment_topics.*
 import kotlinx.android.synthetic.main.fragment_topics.viewLoading
 import kotlinx.android.synthetic.main.view_error.*

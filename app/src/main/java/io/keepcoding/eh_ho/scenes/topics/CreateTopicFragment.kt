@@ -1,4 +1,4 @@
-package io.keepcoding.eh_ho.posts
+package io.keepcoding.eh_ho.scenes.topics
 
 import android.content.Context
 import android.os.Bundle
@@ -6,28 +6,28 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import io.keepcoding.eh_ho.R
-import io.keepcoding.eh_ho.data.CreatePostModel
-import io.keepcoding.eh_ho.data.PostsRepo
+import io.keepcoding.eh_ho.data.CreateTopicModel
 import io.keepcoding.eh_ho.data.RequestError
-import io.keepcoding.eh_ho.inflate
-import io.keepcoding.eh_ho.topics.LoadingDialogFragment
-import kotlinx.android.synthetic.main.fragment_create_post.*
+import io.keepcoding.eh_ho.data.TopicsRepo
+import io.keepcoding.eh_ho.data.UserRepo
+import io.keepcoding.eh_ho.utils.inflate
+import kotlinx.android.synthetic.main.fragment_create_topic.*
 
-const val TAG_LOADING_DIALOG_CREATING_POST = "loading_dialog_creating_post"
+const val TAG_LOADING_DIALOG = "loading_dialog"
 
-class CreatePostFragment(val topicId: String, val topicTitle: String) : Fragment() {
+class CreateTopicFragment : Fragment() {
 
-    var createPostInteractionListener: CreatePostInteractionListener? = null
+    var createTopicInteractionListener: CreateTopicInteractionListener? = null
     val loadingDialogFragment: LoadingDialogFragment by lazy {
-        val message = getString(R.string.label_creating_post)
+        val message = getString(R.string.label_creating_topic)
         LoadingDialogFragment.newInstance(message)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        if (context is CreatePostInteractionListener) {
-            createPostInteractionListener = context
+        if (context is CreateTopicInteractionListener) {
+            createTopicInteractionListener = context
         }
     }
 
@@ -42,13 +42,7 @@ class CreatePostFragment(val topicId: String, val topicTitle: String) : Fragment
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return container?.inflate(R.layout.fragment_create_post)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        labelTopicTitle.text = topicTitle
+        return container?.inflate(R.layout.fragment_create_topic)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -58,29 +52,38 @@ class CreatePostFragment(val topicId: String, val topicTitle: String) : Fragment
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_send -> createPost()
+            R.id.action_send -> createTopic()
         }
 
         return super.onOptionsItemSelected(item)
     }
 
-    private fun createPost() {
+    override fun onResume() {
+        super.onResume()
+
+        context?.let {
+            labelAuthor.text = UserRepo.getUsername(it)
+        }
+    }
+
+    private fun createTopic() {
         if (isFormValid()) {
-            sendPost()
+            postTopic()
         } else {
             showErrors()
         }
     }
 
-    private fun sendPost() {
+    private fun postTopic() {
+
         enableLoadingDialog()
 
-        val model = CreatePostModel(topicId, inputContent.text.toString())
+        val model = CreateTopicModel(inputTitle.text.toString(), inputContent.text.toString())
 
         context?.let {
-            PostsRepo.addPost(it, model, {
+            TopicsRepo.addTopic(it, model, {
                 enableLoadingDialog(false)
-                createPostInteractionListener?.onPostCreated()
+                createTopicInteractionListener?.onTopicCreated()
             }, {
                 enableLoadingDialog(false)
                 handleError(it)
@@ -90,7 +93,7 @@ class CreatePostFragment(val topicId: String, val topicTitle: String) : Fragment
 
     private fun enableLoadingDialog(enabled: Boolean = true) {
         if (enabled) {
-            loadingDialogFragment.show(childFragmentManager, TAG_LOADING_DIALOG_CREATING_POST)
+            loadingDialogFragment.show(childFragmentManager, TAG_LOADING_DIALOG)
         } else {
             loadingDialogFragment.dismiss()
         }
@@ -105,14 +108,18 @@ class CreatePostFragment(val topicId: String, val topicTitle: String) : Fragment
     }
 
     private fun showErrors() {
+        if (inputTitle.text.isEmpty()) {
+            inputTitle.error = getString(R.string.error_empty)
+        }
+
         if (inputContent.text.isEmpty()) {
             inputContent.error = getString(R.string.error_empty)
         }
     }
 
-    private fun isFormValid() = inputContent.text.isNotEmpty()
+    private fun isFormValid() = inputTitle.text.isNotEmpty() && inputContent.text.isNotEmpty()
 
-    interface CreatePostInteractionListener {
-        fun onPostCreated()
+    interface CreateTopicInteractionListener {
+        fun onTopicCreated()
     }
 }

@@ -1,4 +1,4 @@
-package io.keepcoding.eh_ho.posts
+package io.keepcoding.eh_ho.scenes.posts
 
 import android.content.Context
 import android.os.Bundle
@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.PostsRepo
-import io.keepcoding.eh_ho.inflate
+import io.keepcoding.eh_ho.utils.inflate
 import kotlinx.android.synthetic.main.fragment_posts.*
 import kotlinx.android.synthetic.main.fragment_posts.swipeRefresh
 import kotlinx.android.synthetic.main.fragment_posts.viewError

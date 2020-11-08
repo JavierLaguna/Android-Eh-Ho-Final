@@ -1,4 +1,4 @@
-package io.keepcoding.eh_ho.login
+package io.keepcoding.eh_ho.scenes.login
 
 import android.content.Context
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.SignUpModel
-import io.keepcoding.eh_ho.inflate
+import io.keepcoding.eh_ho.utils.inflate
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import java.lang.IllegalArgumentException
 

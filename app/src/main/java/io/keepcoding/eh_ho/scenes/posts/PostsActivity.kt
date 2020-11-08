@@ -1,9 +1,9 @@
-package io.keepcoding.eh_ho.posts
+package io.keepcoding.eh_ho.scenes.posts
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import io.keepcoding.eh_ho.R
-import io.keepcoding.eh_ho.isFirstTimeCreated
+import io.keepcoding.eh_ho.utils.isFirstTimeCreated
 
 const val EXTRA_TOPIC_ID = "TOPIC_ID"
 const val EXTRA_TOPIC_TITLE = "TOPIC_TITLE"

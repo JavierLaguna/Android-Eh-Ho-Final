@@ -1,4 +1,4 @@
-package io.keepcoding.eh_ho.posts
+package io.keepcoding.eh_ho.scenes.posts
 
 import android.view.View
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.Post
-import io.keepcoding.eh_ho.inflate
+import io.keepcoding.eh_ho.utils.inflate
 import kotlinx.android.synthetic.main.item_post.view.*
 
 class PostsAdapter : RecyclerView.Adapter<PostsAdapter.PostHolder>() {

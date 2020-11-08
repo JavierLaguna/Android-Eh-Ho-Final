@@ -1,4 +1,4 @@
-package io.keepcoding.eh_ho.topics
+package io.keepcoding.eh_ho.scenes.topics
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,10 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import io.keepcoding.eh_ho.*
 import io.keepcoding.eh_ho.data.Topic
 import io.keepcoding.eh_ho.data.UserRepo
-import io.keepcoding.eh_ho.login.LoginActivity
-import io.keepcoding.eh_ho.posts.EXTRA_TOPIC_ID
-import io.keepcoding.eh_ho.posts.EXTRA_TOPIC_TITLE
-import io.keepcoding.eh_ho.posts.PostsActivity
+import io.keepcoding.eh_ho.scenes.login.LoginActivity
+import io.keepcoding.eh_ho.scenes.posts.EXTRA_TOPIC_ID
+import io.keepcoding.eh_ho.scenes.posts.EXTRA_TOPIC_TITLE
+import io.keepcoding.eh_ho.scenes.posts.PostsActivity
+import io.keepcoding.eh_ho.utils.isFirstTimeCreated
 
 const val TRANSACTION_CREATE_TOPIC = "create_topic"
 
