@@ -1,4 +1,4 @@
-package io.keepcoding.eh_ho.topics
+package io.keepcoding.eh_ho.scenes.createTopic
 
 import android.content.Context
 import android.os.Bundle
@@ -10,7 +10,8 @@ import io.keepcoding.eh_ho.data.CreateTopicModel
 import io.keepcoding.eh_ho.data.RequestError
 import io.keepcoding.eh_ho.data.TopicsRepo
 import io.keepcoding.eh_ho.data.UserRepo
-import io.keepcoding.eh_ho.inflate
+import io.keepcoding.eh_ho.scenes.common.LoadingDialogFragment
+import io.keepcoding.eh_ho.utils.inflate
 import kotlinx.android.synthetic.main.fragment_create_topic.*
 
 const val TAG_LOADING_DIALOG = "loading_dialog"

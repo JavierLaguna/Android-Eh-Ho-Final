@@ -1,34 +1,46 @@
-package io.keepcoding.eh_ho.topics
+package io.keepcoding.eh_ho.scenes.topics
 
 import android.content.Context
+import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.keepcoding.eh_ho.R
-import io.keepcoding.eh_ho.data.Topic
-import io.keepcoding.eh_ho.data.TopicsRepo
-import io.keepcoding.eh_ho.inflate
+import io.keepcoding.eh_ho.models.Topic
+import io.keepcoding.eh_ho.utils.CustomViewModelFactory
+import io.keepcoding.eh_ho.utils.inflate
 import kotlinx.android.synthetic.main.fragment_topics.*
-import kotlinx.android.synthetic.main.fragment_topics.viewLoading
-import kotlinx.android.synthetic.main.view_error.*
-import java.lang.IllegalArgumentException
+import kotlinx.android.synthetic.main.view_error.view.*
 
-class TopicsFragment : Fragment() {
 
-    var topicsInteractionListener: TopicsInteractionListener? = null
+class TopicsFragment : Fragment(), TopicsViewModelDelegate {
 
+    // TopicsInteractionListener
+    interface TopicsInteractionListener {
+        fun onCreateTopic()
+        fun onShowPosts(topic: Topic)
+        fun onLogout()
+    }
+
+    private val viewModel: TopicsViewModel by lazy {
+        val factory = CustomViewModelFactory(activity!!.application, this)
+        ViewModelProvider(this, factory).get(TopicsViewModel::class.java)
+    }
     private val topicsAdapter: TopicsAdapter by lazy {
         val adapter = TopicsAdapter {
             topicsInteractionListener?.onShowPosts(it)
         }
         adapter
     }
+    private var topicsInteractionListener: TopicsInteractionListener? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -56,28 +68,14 @@ class TopicsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        buttonCreate.setOnClickListener {
-            topicsInteractionListener?.onCreateTopic()
-        }
-
-        buttonRetry.setOnClickListener {
-            retryLoadTopics()
-        }
-
-        swipeRefresh.setOnRefreshListener {
-            loadTopics()
-        }
-
-        listTopics.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        listTopics.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        listTopics.adapter = topicsAdapter
+        initialize()
+        setListeners()
     }
 
     override fun onResume() {
         super.onResume()
 
-        loadTopics()
+        viewModel.refreshTopics()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -96,20 +94,56 @@ class TopicsFragment : Fragment() {
         super.onDetach()
 
         topicsInteractionListener = null
+        viewModel.delegate = null
     }
 
-    private fun loadTopics() {
-        context?.let {
-            enableLoading()
-            TopicsRepo.getTopics(it.applicationContext, {
-                topicsAdapter.setTopics(it)
-                enableLoading(false)
-                swipeRefresh.isRefreshing = false
-            }, {
-                swipeRefresh.isRefreshing = false
-                showError()
-            })
+    private fun initialize() {
+        viewModel.delegate = this
+
+        listTopics.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        listTopics.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        listTopics.adapter = topicsAdapter
+    }
+
+    private fun setListeners() {
+        buttonCreate.setOnClickListener {
+            topicsInteractionListener?.onCreateTopic()
         }
+
+        viewError.buttonRetry.setOnClickListener {
+            retryLoadTopics()
+        }
+
+        swipeRefresh.setOnRefreshListener {
+            swipeRefresh.isRefreshing = true
+            viewModel.refreshTopics()
+        }
+
+        listTopics.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                listTopics.layoutManager?.let {
+                    val visibleItemCount: Int = it.childCount
+                    val totalItemCount: Int = it.itemCount
+                    val firstVisibleItemPosition: Int =
+                        (it as LinearLayoutManager).findFirstVisibleItemPosition()
+
+                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
+                        && firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE
+                    ) {
+                        viewModel.fetchMoreTopics()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun retryLoadTopics() {
+        showError(false)
+        viewModel.refreshTopics()
     }
 
     private fun enableLoading(enabled: Boolean = true) {
@@ -125,6 +159,8 @@ class TopicsFragment : Fragment() {
     }
 
     private fun showError(show: Boolean = true) {
+        swipeRefresh.isRefreshing = false
+
         if (show) {
             viewError.visibility = View.VISIBLE
             buttonCreate.visibility = View.VISIBLE
@@ -135,15 +171,19 @@ class TopicsFragment : Fragment() {
         }
     }
 
-    private fun retryLoadTopics() {
+    // TopicsViewModelDelegate
+    override fun updateTopics(topics: List<Topic>) {
+        topicsAdapter.setTopics(topics)
         showError(false)
-        loadTopics()
+        swipeRefresh.isRefreshing = false
     }
 
-    interface TopicsInteractionListener {
-        fun onCreateTopic()
-        fun onShowPosts(topic: Topic)
-        fun onLogout()
+    override fun updateLoadingState(show: Boolean) {
+        enableLoading(show)
+    }
+
+    override fun onErrorGettingTopics() {
+        showError()
     }
 }
 

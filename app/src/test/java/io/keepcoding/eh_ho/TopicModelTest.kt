@@ -1,6 +1,6 @@
 package io.keepcoding.eh_ho
 
-import io.keepcoding.eh_ho.data.Topic
+import io.keepcoding.eh_ho.models.Topic
 import org.json.JSONObject
 import org.junit.Assert.assertEquals
 import org.junit.Test

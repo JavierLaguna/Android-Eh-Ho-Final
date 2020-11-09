@@ -1,4 +1,4 @@
-package io.keepcoding.eh_ho.posts
+package io.keepcoding.eh_ho.scenes.posts
 
 import android.content.Context
 import android.os.Bundle
@@ -9,8 +9,8 @@ import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.CreatePostModel
 import io.keepcoding.eh_ho.data.PostsRepo
 import io.keepcoding.eh_ho.data.RequestError
-import io.keepcoding.eh_ho.inflate
-import io.keepcoding.eh_ho.topics.LoadingDialogFragment
+import io.keepcoding.eh_ho.utils.inflate
+import io.keepcoding.eh_ho.scenes.common.LoadingDialogFragment
 import kotlinx.android.synthetic.main.fragment_create_post.*
 
 const val TAG_LOADING_DIALOG_CREATING_POST = "loading_dialog_creating_post"

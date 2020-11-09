@@ -1,11 +1,12 @@
-package io.keepcoding.eh_ho.topics
+package io.keepcoding.eh_ho.scenes.topics
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.keepcoding.eh_ho.R
-import io.keepcoding.eh_ho.data.Topic
-import io.keepcoding.eh_ho.inflate
+import io.keepcoding.eh_ho.models.Topic
+import io.keepcoding.eh_ho.utils.TimeOffset
+import io.keepcoding.eh_ho.utils.inflate
 import kotlinx.android.synthetic.main.item_topic.view.*
 import java.util.*
 
@@ -52,13 +53,16 @@ class TopicsAdapter(val topicClickListener: ((Topic) -> Unit)?) :
 
                 field?.let { topic ->
                     itemView.labelTitle.text = topic.title
-                    itemView.labelPosts.text = topic.posts.toString()
+                    itemView.labelPosts.text = topic.postsCount.toString()
                     itemView.labelViews.text = topic.views.toString()
-                    setTimeOffset(topic.getTimeOffset())
+
+                    topic.createdAt?.let { createdAt ->
+                        setTimeOffset(TimeOffset.getTimeOffset(createdAt))
+                    }
                 }
             }
 
-        private fun setTimeOffset(timeOffset: Topic.TimeOffset) {
+        private fun setTimeOffset(timeOffset: TimeOffset) {
 
             val quantityString = when (timeOffset.unit) {
                 Calendar.YEAR -> R.plurals.years

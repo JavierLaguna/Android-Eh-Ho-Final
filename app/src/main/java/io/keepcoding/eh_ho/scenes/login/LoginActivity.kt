@@ -1,4 +1,4 @@
-package io.keepcoding.eh_ho.login
+package io.keepcoding.eh_ho.scenes.login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,8 +10,8 @@ import io.keepcoding.eh_ho.data.RequestError
 import io.keepcoding.eh_ho.data.SignInModel
 import io.keepcoding.eh_ho.data.SignUpModel
 import io.keepcoding.eh_ho.data.UserRepo
-import io.keepcoding.eh_ho.topics.TopicsActivity
-import io.keepcoding.eh_ho.isFirstTimeCreated
+import io.keepcoding.eh_ho.scenes.topics.TopicsActivity
+import io.keepcoding.eh_ho.utils.isFirstTimeCreated
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), SignInFragment.SignInInteractionListener,

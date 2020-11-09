@@ -4,41 +4,11 @@ import android.content.Context
 import com.android.volley.NetworkError
 import com.android.volley.Request
 import com.android.volley.ServerError
-import com.android.volley.toolbox.JsonObjectRequest
 import io.keepcoding.eh_ho.R
 import org.json.JSONObject
 
 // Singleton
 object TopicsRepo {
-
-    fun getTopics(
-        context: Context,
-        onSuccess: (List<Topic>) -> Unit,
-        onError: (RequestError) -> Unit
-    ) {
-        val request = JsonObjectRequest(
-            Request.Method.GET,
-            ApiRouters.getTopics(),
-            null,
-            { response ->
-                val list = Topic.parseTopicsList(response)
-                onSuccess(list)
-            },
-            {
-                it.printStackTrace()
-
-                val errorObject = if (it is NetworkError) {
-                    RequestError(it, messageResId = R.string.error_no_internet)
-                } else {
-                    RequestError(it)
-                }
-
-                onError(errorObject)
-            }
-        )
-
-        ApiRequestQueue.getReuestQueue(context).add(request)
-    }
 
     fun addTopic(
         context: Context,
