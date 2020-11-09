@@ -1,6 +1,7 @@
 package io.keepcoding.eh_ho.scenes.topics
 
 import android.content.Context
+import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.*
@@ -10,17 +11,24 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.models.Topic
 import io.keepcoding.eh_ho.utils.CustomViewModelFactory
 import io.keepcoding.eh_ho.utils.inflate
 import kotlinx.android.synthetic.main.fragment_topics.*
-import kotlinx.android.synthetic.main.fragment_topics.viewLoading
-import kotlinx.android.synthetic.main.view_error.*
-import java.lang.IllegalArgumentException
+import kotlinx.android.synthetic.main.view_error.view.*
+
 
 class TopicsFragment : Fragment(), TopicsViewModelDelegate {
+
+    // TopicsInteractionListener
+    interface TopicsInteractionListener {
+        fun onCreateTopic()
+        fun onShowPosts(topic: Topic)
+        fun onLogout()
+    }
 
     private val viewModel: TopicsViewModel by lazy {
         val factory = CustomViewModelFactory(activity!!.application, this)
@@ -86,6 +94,7 @@ class TopicsFragment : Fragment(), TopicsViewModelDelegate {
         super.onDetach()
 
         topicsInteractionListener = null
+        viewModel.delegate = null
     }
 
     private fun initialize() {
@@ -102,7 +111,7 @@ class TopicsFragment : Fragment(), TopicsViewModelDelegate {
             topicsInteractionListener?.onCreateTopic()
         }
 
-        buttonRetry.setOnClickListener {
+        viewError.buttonRetry.setOnClickListener {
             retryLoadTopics()
         }
 
@@ -110,6 +119,31 @@ class TopicsFragment : Fragment(), TopicsViewModelDelegate {
             swipeRefresh.isRefreshing = true
             viewModel.refreshTopics()
         }
+
+        listTopics.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                listTopics.layoutManager?.let {
+                    val visibleItemCount: Int = it.childCount
+                    val totalItemCount: Int = it.itemCount
+                    val firstVisibleItemPosition: Int =
+                        (it as LinearLayoutManager).findFirstVisibleItemPosition()
+
+                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
+                        && firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE
+                    ) {
+                        viewModel.fetchMoreTopics()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun retryLoadTopics() {
+        showError(false)
+        viewModel.refreshTopics()
     }
 
     private fun enableLoading(enabled: Boolean = true) {
@@ -137,20 +171,10 @@ class TopicsFragment : Fragment(), TopicsViewModelDelegate {
         }
     }
 
-    private fun retryLoadTopics() {
-        showError(false)
-        viewModel.refreshTopics()
-    }
-
-    interface TopicsInteractionListener {
-        fun onCreateTopic()
-        fun onShowPosts(topic: Topic)
-        fun onLogout()
-    }
-
     // TopicsViewModelDelegate
     override fun updateTopics(topics: List<Topic>) {
         topicsAdapter.setTopics(topics)
+        showError(false)
         swipeRefresh.isRefreshing = false
     }
 

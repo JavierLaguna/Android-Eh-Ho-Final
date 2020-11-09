@@ -5,5 +5,5 @@ import io.keepcoding.eh_ho.repositories.services.models.LatestTopicsResponse
 
 interface TopicsRepository {
 
-    fun getLatestTopics(cb: DiscourseService.CallbackResponse<LatestTopicsResponse>)
+    fun getLatestTopics(moreTopicsUrl: String?, cb: DiscourseService.CallbackResponse<LatestTopicsResponse>)
 }

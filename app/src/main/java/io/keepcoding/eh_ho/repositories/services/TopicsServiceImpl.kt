@@ -9,11 +9,25 @@ import retrofit2.Response
 
 class TopicsServiceImpl : TopicsRepository {
 
-    override fun getLatestTopics(cb: DiscourseService.CallbackResponse<LatestTopicsResponse>) {
+    override fun getLatestTopics(
+        moreTopicsUrl: String?,
+        cb: DiscourseService.CallbackResponse<LatestTopicsResponse>
+    ) {
 
-        DiscourseService().topicsApi.getTopics().enqueue(object : Callback<LatestTopicsResponse> {
+        val request =
+            if (moreTopicsUrl == null) {
+                DiscourseService().topicsApi.getTopics()
+            } else {
+                val nextPageUrl = moreTopicsUrl.replace("/latest", "/latest.json")
+                DiscourseService().topicsApi.getTopicsPage(nextPageUrl)
+            }
 
-            override fun onResponse(call: Call<LatestTopicsResponse>, response: Response<LatestTopicsResponse>) {
+        request.enqueue(object : Callback<LatestTopicsResponse> {
+
+            override fun onResponse(
+                call: Call<LatestTopicsResponse>,
+                response: Response<LatestTopicsResponse>
+            ) {
                 if (response.isSuccessful && response.body() != null) {
                     cb.onResponse(response.body()!!)
                 } else {
@@ -24,7 +38,6 @@ class TopicsServiceImpl : TopicsRepository {
             override fun onFailure(call: Call<LatestTopicsResponse>, t: Throwable) {
                 cb.onFailure(t)
             }
-
         })
     }
 

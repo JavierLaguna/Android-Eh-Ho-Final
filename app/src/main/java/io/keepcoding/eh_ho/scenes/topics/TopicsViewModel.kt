@@ -17,7 +17,7 @@ class TopicsViewModel(private val context: Application) : ViewModel() {
     private var isLoading = false
         set(value) {
             field = value
-            delegate?.updateLoadingState(value)
+            delegate?.updateLoadingState(value && topics.isEmpty())
         }
     private val topics = mutableListOf<Topic>()
 
@@ -31,27 +31,39 @@ class TopicsViewModel(private val context: Application) : ViewModel() {
         fetchTopics()
     }
 
+    fun fetchMoreTopics() {
+        if (nextPageUrl != null) {
+            fetchTopics()
+            nextPageUrl = null
+        }
+    }
+
     private fun fetchTopics() {
+        if (isLoading) {
+            return
+        }
+
         isLoading = true
 
-        topicsRepository.getLatestTopics(object :
+        topicsRepository.getLatestTopics(nextPageUrl, object :
             DiscourseService.CallbackResponse<LatestTopicsResponse> {
 
             override fun onResponse(response: LatestTopicsResponse) {
                 response.topicList?.let {
+                    nextPageUrl = it.moreTopicsUrl
+
                     it.topics?.let { newTopics ->
                         topics.addAll(newTopics)
                         delegate?.updateTopics(topics)
                     }
-                    nextPageUrl = it.moreTopicsUrl
                 }
 
                 isLoading = false
             }
 
             override fun onFailure(t: Throwable, res: Response<*>?) {
-                delegate?.onErrorGettingTopics()
                 isLoading = false
+                delegate?.onErrorGettingTopics()
             }
         })
     }
