@@ -52,11 +52,13 @@ class TopicsAdapter(val topicClickListener: ((Topic) -> Unit)?) :
                 itemView.tag = field
 
                 field?.let { topic ->
-                    // TODO
                     itemView.labelTitle.text = topic.title
-//                    itemView.labelPosts.text = topic.posts.toString()
+                    itemView.labelPosts.text = topic.postsCount.toString()
                     itemView.labelViews.text = topic.views.toString()
-//                    setTimeOffset(topic.getTimeOffset())
+
+                    topic.createdAt?.let { createdAt ->
+                        setTimeOffset(TimeOffset.getTimeOffset(createdAt))
+                    }
                 }
             }
 

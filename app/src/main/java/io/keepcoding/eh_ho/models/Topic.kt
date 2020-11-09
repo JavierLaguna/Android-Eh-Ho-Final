@@ -2,6 +2,7 @@ package io.keepcoding.eh_ho.models
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.util.*
 
 
 data class Topic(
@@ -10,7 +11,7 @@ data class Topic(
     val id: Int? = null,
 
     @field:SerializedName("created_at")
-    val createdAt: String? = null,
+    val createdAt: Date? = null,
 
     @field:SerializedName("title")
     val title: String? = null,
@@ -19,7 +20,7 @@ data class Topic(
     val views: Int? = null,
 
     @field:SerializedName("last_posted_at")
-    val lastPostedAt: String? = null,
+    val lastPostedAt: Date? = null,
 
     @field:SerializedName("like_count")
     val likeCount: Int? = null,

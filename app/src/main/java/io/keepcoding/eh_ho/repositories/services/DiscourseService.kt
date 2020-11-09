@@ -1,10 +1,13 @@
 package io.keepcoding.eh_ho.repositories.services
 
+import com.google.gson.GsonBuilder
 import io.keepcoding.eh_ho.BuildConfig
+import io.keepcoding.eh_ho.utils.DateTypeDeserializer
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -26,9 +29,13 @@ class DiscourseService {
             .readTimeout(timeout, TimeUnit.MILLISECONDS)
             .build()
 
+        val gsonBuilder = GsonBuilder()
+            .registerTypeAdapter(Date::class.java, DateTypeDeserializer())
+            .create()
+
         val retrofit = Retrofit.Builder()
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gsonBuilder))
             .baseUrl(BuildConfig.DiscourseDomainNew) // TODO: Change DiscourseDomainNew
             .build()
 
