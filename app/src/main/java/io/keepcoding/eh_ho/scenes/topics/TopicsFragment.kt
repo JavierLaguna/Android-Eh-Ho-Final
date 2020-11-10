@@ -5,6 +5,7 @@ import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.*
+import android.widget.SearchView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -80,6 +81,21 @@ class TopicsFragment : Fragment(), TopicsViewModelDelegate {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_topics, menu)
+
+        val search = menu.findItem(R.id.topicsSearchBar)
+        val searchView = search.actionView as SearchView
+        searchView.queryHint = getString(R.string.search)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.searchText = newText
+                return true
+            }
+        })
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -172,8 +188,8 @@ class TopicsFragment : Fragment(), TopicsViewModelDelegate {
     }
 
     // TopicsViewModelDelegate
-    override fun updateTopics(topics: List<Topic>) {
-        topicsAdapter.setTopics(topics)
+    override fun updateTopics() {
+        topicsAdapter.setTopics(viewModel.filteredTopics)
         showError(false)
         swipeRefresh.isRefreshing = false
     }
