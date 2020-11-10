@@ -3,6 +3,7 @@ package io.keepcoding.eh_ho.scenes.posts
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import io.keepcoding.eh_ho.R
+import io.keepcoding.eh_ho.scenes.createPost.CreatePostFragment
 import io.keepcoding.eh_ho.utils.isFirstTimeCreated
 
 const val EXTRA_TOPIC_ID = "TOPIC_ID"
@@ -16,7 +17,7 @@ class PostsActivity : AppCompatActivity(), PostsFragment.PostsInteractionListene
         setContentView(R.layout.activity_posts)
 
         if (isFirstTimeCreated(savedInstanceState)) {
-            val topicId = intent.getStringExtra(EXTRA_TOPIC_ID) ?: ""
+            val topicId = intent.getIntExtra(EXTRA_TOPIC_ID, -1)
 
             supportFragmentManager.beginTransaction()
                 .add(R.id.fragmentContainer, PostsFragment(topicId))

@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_posts.viewLoading
 import kotlinx.android.synthetic.main.view_error.*
 import java.lang.IllegalArgumentException
 
-class PostsFragment(val topicId: String) : Fragment() {
+class PostsFragment(private val topicId: Int) : Fragment() {
 
     var postsInteractionListener: PostsInteractionListener? = null
 
@@ -85,7 +85,7 @@ class PostsFragment(val topicId: String) : Fragment() {
         context?.let {
             enableLoading()
 
-            PostsRepo.getPosts(it.applicationContext, topicId, {
+            PostsRepo.getPosts(it.applicationContext, topicId.toString(), {
                 postsAdapter.setPosts(it)
                 enableLoading(false)
                 swipeRefresh.isRefreshing = false

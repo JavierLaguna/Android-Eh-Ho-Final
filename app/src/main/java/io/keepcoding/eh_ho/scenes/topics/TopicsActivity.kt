@@ -28,7 +28,7 @@ class TopicsActivity : AppCompatActivity(), TopicsFragment.TopicsInteractionList
         }
     }
 
-    fun goToPosts(topic: Topic) {
+    private fun goToPosts(topic: Topic) {
         val intent = Intent(this, PostsActivity::class.java)
         intent.putExtra(EXTRA_TOPIC_ID, topic.id)
         intent.putExtra(EXTRA_TOPIC_TITLE, topic.title)

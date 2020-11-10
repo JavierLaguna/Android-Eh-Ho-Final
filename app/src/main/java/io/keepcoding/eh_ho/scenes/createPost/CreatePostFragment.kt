@@ -1,4 +1,4 @@
-package io.keepcoding.eh_ho.scenes.posts
+package io.keepcoding.eh_ho.scenes.createPost
 
 import android.content.Context
 import android.os.Bundle
