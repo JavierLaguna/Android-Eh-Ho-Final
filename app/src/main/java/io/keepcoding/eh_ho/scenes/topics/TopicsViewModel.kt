@@ -10,6 +10,7 @@ import io.keepcoding.eh_ho.repositories.services.models.LatestTopicsResponse
 import retrofit2.Response
 import java.util.*
 
+
 class TopicsViewModel(private val context: Application) : ViewModel() {
 
     private val topicsRepository: TopicsRepository = TopicsServiceImpl()

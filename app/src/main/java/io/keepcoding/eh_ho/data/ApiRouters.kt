@@ -20,11 +20,6 @@ object ApiRouters {
         .build()
         .toString()
 
-    fun getTopics() = uriBuilder()
-        .appendPath("latest.json")
-        .build()
-        .toString()
-
     fun createTopic() = uriBuilder()
         .appendPath("posts.json")
         .build()

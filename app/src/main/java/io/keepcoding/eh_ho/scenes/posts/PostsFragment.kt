@@ -4,9 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.PostsRepo
+import io.keepcoding.eh_ho.scenes.topics.TopicsViewModel
+import io.keepcoding.eh_ho.utils.CustomViewModelFactory
 import io.keepcoding.eh_ho.utils.inflate
 import kotlinx.android.synthetic.main.fragment_posts.*
 import kotlinx.android.synthetic.main.fragment_posts.swipeRefresh
@@ -17,7 +20,12 @@ import java.lang.IllegalArgumentException
 
 class PostsFragment(private val topicId: Int) : Fragment() {
 
-    var postsInteractionListener: PostsInteractionListener? = null
+    private val viewModel: PostsViewModel by lazy {
+        val factory = CustomViewModelFactory(activity!!.application, this)
+        ViewModelProvider(this, factory).get(PostsViewModel::class.java)
+    }
+
+    private var postsInteractionListener: PostsInteractionListener? = null
 
     private val postsAdapter: PostsAdapter by lazy {
         val adapter = PostsAdapter()
@@ -50,6 +58,9 @@ class PostsFragment(private val topicId: Int) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // TODO
+        viewModel.initialize(topicId)
+
         listPosts.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         listPosts.adapter = postsAdapter
@@ -81,19 +92,19 @@ class PostsFragment(private val topicId: Int) : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun loadPosts() {
-        context?.let {
-            enableLoading()
-
-            PostsRepo.getPosts(it.applicationContext, topicId.toString(), {
-                postsAdapter.setPosts(it)
-                enableLoading(false)
-                swipeRefresh.isRefreshing = false
-            }, {
-                swipeRefresh.isRefreshing = false
-                showError()
-            })
-        }
+    private fun loadPosts() { // TODO
+//        context?.let {
+//            enableLoading()
+//
+//            PostsRepo.getPosts(it.applicationContext, topicId.toString(), {
+//                postsAdapter.setPosts(it)
+//                enableLoading(false)
+//                swipeRefresh.isRefreshing = false
+//            }, {
+//                swipeRefresh.isRefreshing = false
+//                showError()
+//            })
+//        }
     }
 
     private fun enableLoading(enabled: Boolean = true) {

@@ -1,6 +1,6 @@
 package io.keepcoding.eh_ho
 
-import io.keepcoding.eh_ho.data.Post
+import io.keepcoding.eh_ho.models.Post
 import org.json.JSONObject
 import org.junit.Assert
 import org.junit.Test
