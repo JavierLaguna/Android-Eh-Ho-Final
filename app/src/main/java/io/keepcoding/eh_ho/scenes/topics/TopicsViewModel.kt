@@ -8,6 +8,7 @@ import io.keepcoding.eh_ho.repositories.services.DiscourseService
 import io.keepcoding.eh_ho.repositories.services.TopicsServiceImpl
 import io.keepcoding.eh_ho.repositories.services.models.LatestTopicsResponse
 import retrofit2.Response
+import java.util.*
 
 class TopicsViewModel(private val context: Application) : ViewModel() {
 
@@ -22,11 +23,31 @@ class TopicsViewModel(private val context: Application) : ViewModel() {
     private val topics = mutableListOf<Topic>()
 
     var delegate: TopicsViewModelDelegate? = null
+    var searchText: String? = ""
+        set(value) {
+            field = value
+            delegate?.updateTopics()
+        }
+    val filteredTopics: List<Topic>
+        get() {
+            searchText?.let { searchText ->
+                if (searchText.isNotEmpty()) {
+                    val fixedSearchText = searchText.toLowerCase(Locale.getDefault())
+
+                    return topics.filter {
+                        val fixedTitle = it.title?.toLowerCase(Locale.getDefault())
+                        fixedTitle?.contains(fixedSearchText) ?: false
+                    }
+                }
+            }
+
+            return topics
+        }
 
     fun refreshTopics() {
         nextPageUrl = null
         topics.clear()
-        delegate?.updateTopics(topics)
+        delegate?.updateTopics()
 
         fetchTopics()
     }
@@ -54,7 +75,7 @@ class TopicsViewModel(private val context: Application) : ViewModel() {
 
                     it.topics?.let { newTopics ->
                         topics.addAll(newTopics)
-                        delegate?.updateTopics(topics)
+                        delegate?.updateTopics()
                     }
                 }
 
