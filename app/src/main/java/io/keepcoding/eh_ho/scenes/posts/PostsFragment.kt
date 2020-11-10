@@ -7,8 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.keepcoding.eh_ho.R
-import io.keepcoding.eh_ho.data.PostsRepo
-import io.keepcoding.eh_ho.scenes.topics.TopicsViewModel
+import io.keepcoding.eh_ho.models.Topic
 import io.keepcoding.eh_ho.utils.CustomViewModelFactory
 import io.keepcoding.eh_ho.utils.inflate
 import kotlinx.android.synthetic.main.fragment_posts.*
@@ -18,19 +17,22 @@ import kotlinx.android.synthetic.main.fragment_posts.viewLoading
 import kotlinx.android.synthetic.main.view_error.*
 import java.lang.IllegalArgumentException
 
-class PostsFragment(private val topicId: Int) : Fragment() {
+class PostsFragment(private val topic: Topic) : Fragment(), PostsViewModelDelegate {
+
+    // PostsInteractionListener
+    interface PostsInteractionListener {
+        fun onCreatePost()
+    }
 
     private val viewModel: PostsViewModel by lazy {
         val factory = CustomViewModelFactory(activity!!.application, this)
         ViewModelProvider(this, factory).get(PostsViewModel::class.java)
     }
-
-    private var postsInteractionListener: PostsInteractionListener? = null
-
     private val postsAdapter: PostsAdapter by lazy {
         val adapter = PostsAdapter()
         adapter
     }
+    private var postsInteractionListener: PostsInteractionListener? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -58,27 +60,15 @@ class PostsFragment(private val topicId: Int) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // TODO
-        viewModel.initialize(topicId)
-
-        listPosts.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        listPosts.adapter = postsAdapter
-
-        buttonRetry.setOnClickListener {
-            retryLoadPosts()
-        }
-
-        swipeRefresh.setOnRefreshListener {
-            loadPosts()
-        }
+        initialize()
+        setListeners()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        loadPosts()
-    }
+//    override fun onResume() {
+//        super.onResume()
+//
+//        loadPosts()
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_create_post, menu)
@@ -90,6 +80,25 @@ class PostsFragment(private val topicId: Int) : Fragment() {
             R.id.action_create_post -> postsInteractionListener?.onCreatePost()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun initialize() {
+        viewModel.delegate = this
+        viewModel.initialize(topic)
+
+        listPosts.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        listPosts.adapter = postsAdapter
+    }
+
+    private fun setListeners() {
+        buttonRetry.setOnClickListener {
+            retryLoadPosts()
+        }
+
+        swipeRefresh.setOnRefreshListener {
+            loadPosts()
+        }
     }
 
     private fun loadPosts() { // TODO
@@ -132,7 +141,23 @@ class PostsFragment(private val topicId: Int) : Fragment() {
         loadPosts()
     }
 
-    interface PostsInteractionListener {
-        fun onCreatePost()
+    // PostsViewModelDelegate
+    override fun updatePosts() {
+        postsAdapter.setPosts(viewModel.posts)
+        showError(false)
+        swipeRefresh.isRefreshing = false
     }
+
+    override fun updateLoadingState(show: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onErrorGettingTopicDetail() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onErrorGettingPosts() {
+        TODO("Not yet implemented")
+    }
+
 }
