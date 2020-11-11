@@ -41,11 +41,13 @@ class PostsAdapter : RecyclerView.Adapter<PostsAdapter.PostHolder>() {
                 field = value
                 itemView.tag = field
 
-                field?.let { post -> // TODO
+                field?.let { post ->
                     itemView.labelAuthor.text = post.author
-//                    itemView.labelDate.text = post.formattedDate()
-//                    itemView.labelContent.text =
-//                        HtmlCompat.fromHtml(post.content, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    itemView.labelDate.text = post.formattedCreatedAt()
+                    post.content?.let {
+                        itemView.labelContent.text =
+                            HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    }
                 }
             }
     }

@@ -1,11 +1,13 @@
 package io.keepcoding.eh_ho.scenes.posts
 
 import android.content.Context
+import android.nfc.tech.MifareUltralight
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.models.Topic
 import io.keepcoding.eh_ho.utils.CustomViewModelFactory
@@ -64,12 +66,6 @@ class PostsFragment(private val topic: Topic) : Fragment(), PostsViewModelDelega
         setListeners()
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//
-//        loadPosts()
-//    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_create_post, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -97,23 +93,29 @@ class PostsFragment(private val topic: Topic) : Fragment(), PostsViewModelDelega
         }
 
         swipeRefresh.setOnRefreshListener {
-            loadPosts()
+            swipeRefresh.isRefreshing = true
+            viewModel.fetchTopicDetail()
         }
-    }
 
-    private fun loadPosts() { // TODO
-//        context?.let {
-//            enableLoading()
-//
-//            PostsRepo.getPosts(it.applicationContext, topicId.toString(), {
-//                postsAdapter.setPosts(it)
-//                enableLoading(false)
-//                swipeRefresh.isRefreshing = false
-//            }, {
-//                swipeRefresh.isRefreshing = false
-//                showError()
-//            })
-//        }
+        listPosts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                listPosts.layoutManager?.let {
+                    val visibleItemCount: Int = it.childCount
+                    val totalItemCount: Int = it.itemCount
+                    val firstVisibleItemPosition: Int =
+                        (it as LinearLayoutManager).findFirstVisibleItemPosition()
+
+                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
+                        && firstVisibleItemPosition >= 0 && totalItemCount >= MifareUltralight.PAGE_SIZE
+                    ) {
+                        viewModel.fetchMorePosts()
+                    }
+                }
+            }
+        })
     }
 
     private fun enableLoading(enabled: Boolean = true) {
@@ -138,7 +140,7 @@ class PostsFragment(private val topic: Topic) : Fragment(), PostsViewModelDelega
 
     private fun retryLoadPosts() {
         showError(false)
-        loadPosts()
+        viewModel.fetchTopicDetail()
     }
 
     // PostsViewModelDelegate
@@ -149,15 +151,15 @@ class PostsFragment(private val topic: Topic) : Fragment(), PostsViewModelDelega
     }
 
     override fun updateLoadingState(show: Boolean) {
-        TODO("Not yet implemented")
+        enableLoading(show)
     }
 
     override fun onErrorGettingTopicDetail() {
-        TODO("Not yet implemented")
+        showError()
     }
 
     override fun onErrorGettingPosts() {
-        TODO("Not yet implemented")
+        showError()
     }
 
 }

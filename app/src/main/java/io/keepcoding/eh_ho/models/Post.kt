@@ -1,6 +1,7 @@
 package io.keepcoding.eh_ho.models
 
 import com.google.gson.annotations.SerializedName
+import java.text.SimpleDateFormat
 import java.util.*
 
 data class Post(
@@ -28,4 +29,10 @@ data class Post(
 
     @field:SerializedName("username")
     val author: String? = null
-)
+) {
+
+    fun formattedCreatedAt(): String {
+        val format = SimpleDateFormat("EEEE, d MMM yyyy", Locale.getDefault())
+        return format.format(createdAt)
+    }
+}
