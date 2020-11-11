@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tabTopics"
+        android:icon="@drawable/ic_add"
+        android:title="Topics" />
+
+    <item
+        android:id="@+id/tabUsers"
+        android:icon="@drawable/ic_author"
+        android:title="Users" />
+</menu>
