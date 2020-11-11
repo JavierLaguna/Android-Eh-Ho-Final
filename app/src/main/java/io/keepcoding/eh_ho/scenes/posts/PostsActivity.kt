@@ -27,14 +27,13 @@ class PostsActivity : AppCompatActivity(), PostsFragment.PostsInteractionListene
 
     // PostsInteractionListener
     override fun onCreatePost() {
-//        val topicId = intent.getStringExtra(EXTRA_TOPIC_ID) ?: "" // TODO
-//        val topicId = intent.getIntExtra(EXTRA_TOPIC_ID, -1)
-//        val topicTitle = intent.getStringExtra(EXTRA_TOPIC_TITLE) ?: ""
-//
-//        supportFragmentManager.beginTransaction()
-//            .replace(R.id.fragmentContainer, CreatePostFragment(topicId.toString(), topicTitle))
-//            .addToBackStack(TRANSACTION_CREATE_POST)
-//            .commit()
+        val topic = intent.getSerializableExtra(EXTRA_TOPIC) as Topic
+        val title = topic.title ?: ""
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, CreatePostFragment(topic.id.toString(), title))
+            .addToBackStack(TRANSACTION_CREATE_POST)
+            .commit()
     }
 
     // CreatePostInteractionListener

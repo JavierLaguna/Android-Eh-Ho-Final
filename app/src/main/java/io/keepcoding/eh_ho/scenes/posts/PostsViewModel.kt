@@ -33,7 +33,6 @@ class PostsViewModel(private val context: Application) : ViewModel() {
 
     fun initialize(topic: Topic) {
         this.topic = topic
-        fetchTopicDetail()
     }
 
     fun fetchTopicDetail() {
@@ -48,6 +47,7 @@ class PostsViewModel(private val context: Application) : ViewModel() {
                     chunkSize = response.chunkSize
                     response.postStream?.let { postStream ->
                         postStream.posts?.let { it ->
+                            posts.clear()
                             posts.addAll(it)
                             delegate?.updatePosts()
                         }

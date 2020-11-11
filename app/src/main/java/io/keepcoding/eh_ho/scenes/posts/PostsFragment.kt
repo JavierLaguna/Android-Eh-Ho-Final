@@ -78,6 +78,12 @@ class PostsFragment(private val topic: Topic) : Fragment(), PostsViewModelDelega
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.fetchTopicDetail()
+    }
+
     private fun initialize() {
         viewModel.delegate = this
         viewModel.initialize(topic)
