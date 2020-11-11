@@ -46,7 +46,7 @@ class TopicsActivity : AppCompatActivity(), TopicsFragment.TopicsInteractionList
     private fun goToUsers() {
         val intent = Intent(this, UsersActivity::class.java)
         startActivity(intent)
-        overridePendingTransition(0,0)
+        overridePendingTransition(0, 0)
         finish()
     }
 
