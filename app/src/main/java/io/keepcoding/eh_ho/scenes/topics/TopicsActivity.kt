@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import io.keepcoding.eh_ho.*
 import io.keepcoding.eh_ho.models.Topic
 import io.keepcoding.eh_ho.data.UserRepo
+import io.keepcoding.eh_ho.scenes.UsersActivity
 import io.keepcoding.eh_ho.scenes.createTopic.CreateTopicFragment
 import io.keepcoding.eh_ho.scenes.login.LoginActivity
 import io.keepcoding.eh_ho.scenes.posts.EXTRA_TOPIC
 import io.keepcoding.eh_ho.scenes.posts.PostsActivity
 import io.keepcoding.eh_ho.utils.isFirstTimeCreated
+import kotlinx.android.synthetic.main.activity_topics.*
 
 const val TRANSACTION_CREATE_TOPIC = "create_topic"
 
@@ -20,11 +22,32 @@ class TopicsActivity : AppCompatActivity(), TopicsFragment.TopicsInteractionList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topics)
 
+        setListeners()
+
         if (isFirstTimeCreated(savedInstanceState)) {
             supportFragmentManager.beginTransaction()
                 .add(R.id.fragmentContainer, TopicsFragment())
                 .commit()
         }
+    }
+
+    private fun setListeners() {
+        bottomNavigation.selectedItemId = R.id.tabTopics
+
+        bottomNavigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.tabUsers -> goToUsers()
+            }
+
+            true
+        }
+    }
+
+    private fun goToUsers() {
+        val intent = Intent(this, UsersActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(0, 0)
+        finish()
     }
 
     private fun goToPosts(topic: Topic) {

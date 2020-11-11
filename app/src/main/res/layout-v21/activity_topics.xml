@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorTabBarBackgorund"
+        android:elevation="4dp"
         app:itemBackground="@color/colorTabBarBackgorund"
         app:itemIconTint="@color/colorPrimary"
         app:itemTextColor="@color/colorPrimary"
