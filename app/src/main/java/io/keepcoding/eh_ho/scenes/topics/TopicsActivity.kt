@@ -8,8 +8,7 @@ import io.keepcoding.eh_ho.models.Topic
 import io.keepcoding.eh_ho.data.UserRepo
 import io.keepcoding.eh_ho.scenes.createTopic.CreateTopicFragment
 import io.keepcoding.eh_ho.scenes.login.LoginActivity
-import io.keepcoding.eh_ho.scenes.posts.EXTRA_TOPIC_ID
-import io.keepcoding.eh_ho.scenes.posts.EXTRA_TOPIC_TITLE
+import io.keepcoding.eh_ho.scenes.posts.EXTRA_TOPIC
 import io.keepcoding.eh_ho.scenes.posts.PostsActivity
 import io.keepcoding.eh_ho.utils.isFirstTimeCreated
 
@@ -28,10 +27,9 @@ class TopicsActivity : AppCompatActivity(), TopicsFragment.TopicsInteractionList
         }
     }
 
-    fun goToPosts(topic: Topic) {
+    private fun goToPosts(topic: Topic) {
         val intent = Intent(this, PostsActivity::class.java)
-        intent.putExtra(EXTRA_TOPIC_ID, topic.id)
-        intent.putExtra(EXTRA_TOPIC_TITLE, topic.title)
+        intent.putExtra(EXTRA_TOPIC, topic)
         startActivity(intent)
     }
 

@@ -10,7 +10,7 @@ import io.keepcoding.eh_ho.utils.inflate
 import kotlinx.android.synthetic.main.item_topic.view.*
 import java.util.*
 
-class TopicsAdapter(val topicClickListener: ((Topic) -> Unit)?) :
+class TopicsAdapter(private val topicClickListener: ((Topic) -> Unit)?) :
     RecyclerView.Adapter<TopicsAdapter.TopicHolder>() {
 
     private val topics = mutableListOf<Topic>()

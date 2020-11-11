@@ -19,6 +19,7 @@ class DiscourseService {
     }
 
     val topicsApi: TopicsApi
+    val postsApi: PostsApi
 
     init {
         val timeout: Long = 6 * 1000
@@ -36,9 +37,10 @@ class DiscourseService {
         val retrofit = Retrofit.Builder()
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gsonBuilder))
-            .baseUrl(BuildConfig.DiscourseDomainNew) // TODO: Change DiscourseDomainNew
+            .baseUrl(BuildConfig.DiscourseDomain)
             .build()
 
         topicsApi = retrofit.create(TopicsApi::class.java)
+        postsApi = retrofit.create(PostsApi::class.java)
     }
 }

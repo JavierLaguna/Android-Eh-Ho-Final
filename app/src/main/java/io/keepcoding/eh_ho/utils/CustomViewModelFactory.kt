@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import io.keepcoding.eh_ho.scenes.posts.PostsViewModel
 import io.keepcoding.eh_ho.scenes.topics.TopicsViewModel
 import java.lang.IllegalArgumentException
 
@@ -17,6 +18,7 @@ class CustomViewModelFactory(
         return with(modelClass) {
             when {
                 isAssignableFrom(TopicsViewModel::class.java) -> TopicsViewModel(application)
+                isAssignableFrom(PostsViewModel::class.java) -> PostsViewModel(application)
                 else -> throw IllegalArgumentException("Unknown ViewModel")
             }
         } as T

@@ -7,7 +7,7 @@ object ApiRouters {
 
     private fun uriBuilder() = Uri.Builder()
         .scheme("https")
-        .authority(BuildConfig.DiscourseDomain)
+        .authority(BuildConfig.DiscourseDomainLegacy)
 
     fun signIn(username: String) = uriBuilder()
         .appendPath("users")
@@ -17,11 +17,6 @@ object ApiRouters {
 
     fun signUp() = uriBuilder()
         .appendPath("users")
-        .build()
-        .toString()
-
-    fun getTopics() = uriBuilder()
-        .appendPath("latest.json")
         .build()
         .toString()
 
