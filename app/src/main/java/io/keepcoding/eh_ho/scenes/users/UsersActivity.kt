@@ -3,12 +3,16 @@ package io.keepcoding.eh_ho.scenes.users
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.scenes.topics.TopicsActivity
 import io.keepcoding.eh_ho.utils.CustomViewModelFactory
 import kotlinx.android.synthetic.main.activity_users.*
+import kotlinx.android.synthetic.main.activity_users.viewError
+import kotlinx.android.synthetic.main.activity_users.viewLoading
+import kotlinx.android.synthetic.main.view_error.*
 
 class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
 
@@ -47,6 +51,10 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
 
             true
         }
+
+        buttonRetry.setOnClickListener {
+            retryLoadUsers()
+        }
     }
 
     private fun goToTopics() {
@@ -56,14 +64,41 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
         finish()
     }
 
+    private fun enableLoading(enabled: Boolean = true) {
+        if (enabled) {
+            listUsers.visibility = View.INVISIBLE
+            viewLoading.visibility = View.VISIBLE
+        } else {
+            listUsers.visibility = View.VISIBLE
+            viewLoading.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun showError(show: Boolean = true) {
+        if (show) {
+            viewError.visibility = View.VISIBLE
+            listUsers.visibility = View.INVISIBLE
+            viewLoading.visibility = View.INVISIBLE
+        } else {
+            viewError.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun retryLoadUsers() {
+        showError(false)
+        viewModel.refreshUsers()
+    }
+
     // UsersViewModelDelegate
     override fun updateUsers() {
         usersAdapter.setUsers(viewModel.users)
     }
 
     override fun updateLoadingState(show: Boolean) {
+        enableLoading(show)
     }
 
     override fun onErrorGettingUsers() {
+        showError()
     }
 }

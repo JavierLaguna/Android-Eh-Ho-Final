@@ -26,6 +26,11 @@ class UsersViewModel(private val context: Application) : ViewModel() {
         fetchUsers()
     }
 
+    fun refreshUsers() {
+        users.clear()
+        fetchUsers()
+    }
+
     private fun fetchUsers() {
         isLoading = true
 
