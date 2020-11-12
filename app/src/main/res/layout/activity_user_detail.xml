@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".scenes.userDetail.UserDetailActivity">
+
+    <FrameLayout
+        android:id="@+id/orangeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/userAvatarContainer"
+        android:layout_width="185dp"
+        android:layout_height="185dp"
+        app:cardCornerRadius="92.5dp"
+        app:layout_constraintBottom_toBottomOf="@id/orangeContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/orangeContainer">
+
+        <ImageView
+            android:id="@+id/userAvatarImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/ic_author" />
+    </androidx.cardview.widget.CardView>
+
+    <FrameLayout
+        android:id="@+id/blackContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorBlackKC"
+        app:layout_constraintBottom_toBottomOf="@id/usernameContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orangeContainer" />
+
+    <LinearLayout
+        android:id="@+id/usernameContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/blackContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userAvatarContainer">
+
+        <TextView
+            android:id="@+id/nickLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            tools:text="NickName" />
+
+        <TextView
+            android:id="@+id/nameLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="17sp"
+            tools:text="User name" />
+
+        <TextView
+            android:id="@+id/lastConnectionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            tools:text="Aug 20 Joined Jul" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

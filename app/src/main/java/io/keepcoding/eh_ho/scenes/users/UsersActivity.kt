@@ -7,13 +7,14 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import io.keepcoding.eh_ho.R
+import io.keepcoding.eh_ho.models.User
 import io.keepcoding.eh_ho.scenes.topics.TopicsActivity
+import io.keepcoding.eh_ho.scenes.userDetail.UserDetailActivity
 import io.keepcoding.eh_ho.utils.CustomViewModelFactory
 import kotlinx.android.synthetic.main.activity_users.*
 import kotlinx.android.synthetic.main.activity_users.swipeRefresh
 import kotlinx.android.synthetic.main.activity_users.viewError
 import kotlinx.android.synthetic.main.activity_users.viewLoading
-import kotlinx.android.synthetic.main.fragment_posts.*
 import kotlinx.android.synthetic.main.view_error.*
 
 class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
@@ -23,7 +24,9 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
         ViewModelProvider(this, factory).get(UsersViewModel::class.java)
     }
     private val usersAdapter: UsersAdapter by lazy {
-        val adapter = UsersAdapter()
+        val adapter = UsersAdapter {
+            goToUserDetail(it)
+        }
         adapter
     }
 
@@ -69,6 +72,12 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
         startActivity(intent)
         overridePendingTransition(0, 0)
         finish()
+    }
+
+    private fun goToUserDetail(user: User) {
+        Intent(this, UserDetailActivity::class.java).apply {
+            startActivity(this)
+        }
     }
 
     private fun enableLoading(enabled: Boolean = true) {
