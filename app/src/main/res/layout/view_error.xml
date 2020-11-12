@@ -10,6 +10,7 @@
         android:id="@+id/iconSad"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:tint="@color/colorAccent"
         app:srcCompat="@drawable/ic_sad" />
 
     <TextView
