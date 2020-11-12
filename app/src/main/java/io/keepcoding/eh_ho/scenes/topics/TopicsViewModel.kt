@@ -6,7 +6,7 @@ import io.keepcoding.eh_ho.models.Topic
 import io.keepcoding.eh_ho.repositories.TopicsRepository
 import io.keepcoding.eh_ho.repositories.services.DiscourseService
 import io.keepcoding.eh_ho.repositories.services.TopicsServiceImpl
-import io.keepcoding.eh_ho.repositories.services.models.LatestTopicsResponse
+import io.keepcoding.eh_ho.repositories.models.LatestTopicsResponse
 import retrofit2.Response
 import java.util.*
 

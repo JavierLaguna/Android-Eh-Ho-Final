@@ -1,7 +1,7 @@
 package io.keepcoding.eh_ho.repositories
 
 import io.keepcoding.eh_ho.repositories.services.DiscourseService
-import io.keepcoding.eh_ho.repositories.services.models.SpecificPostsResponse
+import io.keepcoding.eh_ho.repositories.models.SpecificPostsResponse
 
 interface PostsRepository {
 
