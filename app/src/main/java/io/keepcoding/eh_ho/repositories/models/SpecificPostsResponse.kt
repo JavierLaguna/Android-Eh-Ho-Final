@@ -1,8 +1,7 @@
-package io.keepcoding.eh_ho.repositories.services.models
+package io.keepcoding.eh_ho.repositories.models
 
 import com.google.gson.annotations.SerializedName
 import io.keepcoding.eh_ho.models.PostStream
-import io.keepcoding.eh_ho.models.TopicDetails
 
 
 data class SpecificPostsResponse(

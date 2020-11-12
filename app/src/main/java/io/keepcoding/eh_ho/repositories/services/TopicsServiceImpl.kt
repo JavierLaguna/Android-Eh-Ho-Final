@@ -1,8 +1,8 @@
 package io.keepcoding.eh_ho.repositories.services
 
 import io.keepcoding.eh_ho.repositories.TopicsRepository
-import io.keepcoding.eh_ho.repositories.services.models.LatestTopicsResponse
-import io.keepcoding.eh_ho.repositories.services.models.TopicDetailResponse
+import io.keepcoding.eh_ho.repositories.models.LatestTopicsResponse
+import io.keepcoding.eh_ho.repositories.models.TopicDetailResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

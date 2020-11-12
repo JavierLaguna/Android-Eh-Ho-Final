@@ -20,6 +20,7 @@ class DiscourseService {
 
     val topicsApi: TopicsApi
     val postsApi: PostsApi
+    val usersApi: UsersApi
 
     init {
         val timeout: Long = 6 * 1000
@@ -42,5 +43,6 @@ class DiscourseService {
 
         topicsApi = retrofit.create(TopicsApi::class.java)
         postsApi = retrofit.create(PostsApi::class.java)
+        usersApi = retrofit.create(UsersApi::class.java)
     }
 }

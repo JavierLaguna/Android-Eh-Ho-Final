@@ -1,6 +1,6 @@
 package io.keepcoding.eh_ho.repositories.services
 
-import io.keepcoding.eh_ho.repositories.services.models.SpecificPostsResponse
+import io.keepcoding.eh_ho.repositories.models.SpecificPostsResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers

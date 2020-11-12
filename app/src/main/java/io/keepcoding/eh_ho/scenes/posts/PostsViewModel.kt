@@ -9,8 +9,8 @@ import io.keepcoding.eh_ho.repositories.TopicsRepository
 import io.keepcoding.eh_ho.repositories.services.DiscourseService
 import io.keepcoding.eh_ho.repositories.services.PostsServiceImpl
 import io.keepcoding.eh_ho.repositories.services.TopicsServiceImpl
-import io.keepcoding.eh_ho.repositories.services.models.SpecificPostsResponse
-import io.keepcoding.eh_ho.repositories.services.models.TopicDetailResponse
+import io.keepcoding.eh_ho.repositories.models.SpecificPostsResponse
+import io.keepcoding.eh_ho.repositories.models.TopicDetailResponse
 import retrofit2.Response
 
 
