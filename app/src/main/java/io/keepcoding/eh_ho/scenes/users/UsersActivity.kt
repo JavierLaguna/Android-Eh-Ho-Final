@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.scenes.topics.TopicsActivity
 import io.keepcoding.eh_ho.utils.CustomViewModelFactory
@@ -14,6 +15,10 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
     private val viewModel: UsersViewModel by lazy {
         val factory = CustomViewModelFactory(application, this)
         ViewModelProvider(this, factory).get(UsersViewModel::class.java)
+    }
+    private val usersAdapter: UsersAdapter by lazy {
+        val adapter = UsersAdapter()
+        adapter
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,9 +33,8 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
         viewModel.delegate = this
         viewModel.initialize()
 
-//        listPosts.layoutManager =
-//            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//        listPosts.adapter = postsAdapter
+        listUsers.layoutManager = GridLayoutManager(this, 2)
+        listUsers.adapter = usersAdapter
     }
 
     private fun setListeners() {
@@ -54,14 +58,12 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
 
     // UsersViewModelDelegate
     override fun updateUsers() {
-        TODO("Not yet implemented")
+        usersAdapter.setUsers(viewModel.users)
     }
 
     override fun updateLoadingState(show: Boolean) {
-        TODO("Not yet implemented")
     }
 
     override fun onErrorGettingUsers() {
-        TODO("Not yet implemented")
     }
 }

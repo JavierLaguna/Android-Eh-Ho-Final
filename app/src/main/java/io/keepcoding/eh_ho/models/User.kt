@@ -27,7 +27,7 @@ data class User(
     val likesReceived: Int? = null,
 
     @field:SerializedName("user")
-    val user: UserInfo? = null,
+    val userInfo: UserInfo? = null,
 
     @field:SerializedName("topic_count")
     val topicCount: Int? = null
