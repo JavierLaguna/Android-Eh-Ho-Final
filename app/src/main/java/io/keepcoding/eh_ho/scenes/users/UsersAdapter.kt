@@ -1,8 +1,10 @@
 package io.keepcoding.eh_ho.scenes.users
 
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.models.User
 import io.keepcoding.eh_ho.utils.inflate
@@ -19,7 +21,7 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UserHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersAdapter.UserHolder {
         val view = parent.inflate(R.layout.item_user)
-        return UserHolder(view)
+        return UserHolder(view, parent.context)
     }
 
     override fun onBindViewHolder(holder: UsersAdapter.UserHolder, position: Int) {
@@ -35,14 +37,20 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UserHolder>() {
     }
 
     // ViewHolder
-    inner class UserHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class UserHolder(itemView: View, context: Context) : RecyclerView.ViewHolder(itemView) {
+        private val glide = Glide.with(context)
         var user: User? = null
             set(value) {
                 field = value
                 itemView.tag = field
 
                 field?.let { user ->
-                    itemView.userNameLabel.text = user.userInfo?.name
+                    itemView.userNameLabel.text = user.userInfo?.name ?: user.userInfo?.username
+
+                    val avatarUrl = user.userInfo?.getAvatarURL()
+                    avatarUrl?.let {
+                        glide.load(avatarUrl).into(itemView.imageUser)
+                    }
                 }
             }
     }

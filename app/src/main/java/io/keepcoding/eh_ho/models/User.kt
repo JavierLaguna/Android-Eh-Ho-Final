@@ -1,6 +1,7 @@
 package io.keepcoding.eh_ho.models
 
 import com.google.gson.annotations.SerializedName
+import io.keepcoding.eh_ho.BuildConfig
 
 
 data class User(
@@ -49,5 +50,11 @@ data class User(
 
         @field:SerializedName("username")
         val username: String? = null
-    )
+    ) {
+
+        fun getAvatarURL(imageSize: Int = 100): String {
+            val avatarUrl = avatarTemplate?.replace("{size}", imageSize.toString())
+            return "${BuildConfig.DiscourseDomain}$avatarUrl"
+        }
+    }
 }
