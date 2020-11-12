@@ -10,8 +10,10 @@ import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.scenes.topics.TopicsActivity
 import io.keepcoding.eh_ho.utils.CustomViewModelFactory
 import kotlinx.android.synthetic.main.activity_users.*
+import kotlinx.android.synthetic.main.activity_users.swipeRefresh
 import kotlinx.android.synthetic.main.activity_users.viewError
 import kotlinx.android.synthetic.main.activity_users.viewLoading
+import kotlinx.android.synthetic.main.fragment_posts.*
 import kotlinx.android.synthetic.main.view_error.*
 
 class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
@@ -55,6 +57,11 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
         buttonRetry.setOnClickListener {
             retryLoadUsers()
         }
+
+        swipeRefresh.setOnRefreshListener {
+            swipeRefresh.isRefreshing = true
+            viewModel.refreshUsers()
+        }
     }
 
     private fun goToTopics() {
@@ -92,6 +99,8 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
     // UsersViewModelDelegate
     override fun updateUsers() {
         usersAdapter.setUsers(viewModel.users)
+        showError(false)
+        swipeRefresh.isRefreshing = false
     }
 
     override fun updateLoadingState(show: Boolean) {
