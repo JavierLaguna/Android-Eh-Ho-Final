@@ -9,17 +9,38 @@ import io.keepcoding.eh_ho.repositories.models.UsersResponse
 import io.keepcoding.eh_ho.repositories.services.DiscourseService
 import io.keepcoding.eh_ho.repositories.services.UsersServiceImpl
 import retrofit2.Response
+import java.util.*
 
 class UsersViewModel(private val context: Application) : ViewModel() {
 
     private val usersRepository: UsersRepository = UsersServiceImpl()
+    private val users = mutableListOf<User>()
     private var isLoading = false
         set(value) {
             field = value
             delegate?.updateLoadingState(value)
         }
+    var searchText: String? = ""
+        set(value) {
+            field = value
+            delegate?.updateUsers()
+        }
+    val filteredUsers: List<User>
+        get() {
+            searchText?.let { searchText ->
+                if (searchText.isNotEmpty()) {
+                    val fixedSearchText = searchText.toLowerCase(Locale.getDefault())
 
-    val users = mutableListOf<User>()
+                    return users.filter {
+                        val fixedTitle = it.userInfo?.name?.toLowerCase(Locale.getDefault())
+                        fixedTitle?.contains(fixedSearchText) ?: false
+                    }
+                }
+            }
+
+            return users
+        }
+
     var delegate: UsersViewModelDelegate? = null
 
     fun initialize() {
