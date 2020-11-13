@@ -1,9 +1,15 @@
 package io.keepcoding.eh_ho.scenes.userDetail
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.Slide
+import android.view.Gravity
 import android.view.View
+import android.view.Window
 import android.view.WindowManager
+import android.view.animation.AnticipateOvershootInterpolator
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -25,10 +31,36 @@ class UserDetailActivity : AppCompatActivity(), UserDetailViewModelDelegate {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setupAnimation()
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_detail)
 
         initialize()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAfterTransition()
+        }
+        return true
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun setupAnimation() {
+        window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val enterTransition = Slide()
+        enterTransition.slideEdge = Gravity.RIGHT
+        enterTransition.duration = 1000
+        enterTransition.interpolator = AnticipateOvershootInterpolator()
+        window.enterTransition = enterTransition
+
+        window.allowEnterTransitionOverlap = false
     }
 
     private fun initialize() {
