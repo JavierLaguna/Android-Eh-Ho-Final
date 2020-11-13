@@ -11,9 +11,17 @@ import io.keepcoding.eh_ho.utils.inflate
 import kotlinx.android.synthetic.main.item_user.view.*
 
 
-class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UserHolder>() {
+class UsersAdapter(private val userClickListener: ((User) -> Unit)?) :
+    RecyclerView.Adapter<UsersAdapter.UserHolder>() {
 
     private val users = mutableListOf<User>()
+
+    private val listener: ((View) -> Unit) = {
+        if (it.tag is User) {
+            val user: User = it.tag as User
+            userClickListener?.invoke(user)
+        }
+    }
 
     override fun getItemCount(): Int {
         return users.size
@@ -28,6 +36,7 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UserHolder>() {
         val user = users[position]
 
         holder.user = user
+        holder.itemView.setOnClickListener(listener)
     }
 
     fun setUsers(users: List<User>) {
@@ -45,12 +54,10 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UserHolder>() {
                 itemView.tag = field
 
                 field?.let { user ->
-                    itemView.userNameLabel.text = user.userInfo?.name ?: user.userInfo?.username
-
                     val avatarUrl = user.userInfo?.getAvatarURL()
-                    avatarUrl?.let {
-                        glide.load(avatarUrl).into(itemView.imageUser)
-                    }
+                    glide.load(avatarUrl).into(itemView.imageUser)
+
+                    itemView.userNameLabel.text = user.userInfo?.name ?: user.userInfo?.username
                 }
             }
     }
