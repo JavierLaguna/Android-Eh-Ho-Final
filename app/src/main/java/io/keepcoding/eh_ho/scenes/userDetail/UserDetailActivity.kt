@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.models.User
 import io.keepcoding.eh_ho.utils.CustomViewModelFactory
@@ -48,8 +49,16 @@ class UserDetailActivity : AppCompatActivity(), UserDetailViewModelDelegate {
         nameLabel.text = viewModel.name
     }
 
+    private fun showError() {
+        Snackbar.make(container, R.string.error_default, Snackbar.LENGTH_SHORT).show()
+    }
+
     // UserDetailViewModelDelegate
     override fun updateUserInfo() {
         setUserInfoUI()
+    }
+
+    override fun onErrorGettingUserDetail() {
+        showError()
     }
 }

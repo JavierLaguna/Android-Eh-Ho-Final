@@ -47,8 +47,7 @@ class UserDetailViewModel(private val context: Application) : ViewModel() {
                 }
 
                 override fun onFailure(t: Throwable, res: Response<*>?) {
-                    println()
-//                    delegate?.onErrorGettingUsers()
+                    delegate?.onErrorGettingUserDetail()
                 }
             })
         }
