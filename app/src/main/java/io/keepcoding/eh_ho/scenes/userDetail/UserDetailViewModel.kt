@@ -46,7 +46,8 @@ class UserDetailViewModel(private val context: Application) : ViewModel() {
 
                 override fun onResponse(response: UserDetailResponse) {
                     response.userDetail?.let { userDetail ->
-
+                        likesReceived = userDetail.profileViewCount.toString()
+                        isMod = userDetail.moderator ?: false
                         userDetail.lastPostedAt?.let {
                             val formatter =
                                 SimpleDateFormat("E, d MMM yyyy HH:mm", Locale.getDefault())

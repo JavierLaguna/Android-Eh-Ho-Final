@@ -2,6 +2,7 @@ package io.keepcoding.eh_ho.scenes.userDetail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -48,6 +49,13 @@ class UserDetailActivity : AppCompatActivity(), UserDetailViewModelDelegate {
         nickLabel.text = viewModel.nickname
         nameLabel.text = viewModel.name
         lastConnectionLabel.text = viewModel.lastConnection
+        myLikesLabel.text = viewModel.likesReceived
+
+        if (viewModel.isMod) {
+            modBadgeContainer.visibility = View.VISIBLE
+        } else {
+            modBadgeContainer.visibility = View.GONE
+        }
     }
 
     private fun showError() {
