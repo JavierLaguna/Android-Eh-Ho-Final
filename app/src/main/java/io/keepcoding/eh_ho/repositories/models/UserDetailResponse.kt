@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName
 import io.keepcoding.eh_ho.models.UserDetail
 
 data class UserDetailResponse(
+
     @field:SerializedName("user")
-    val user: UserDetail? = null
+    val userDetail: UserDetail? = null
+
 )
 
