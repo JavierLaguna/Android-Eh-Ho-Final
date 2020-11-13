@@ -47,6 +47,7 @@ class UserDetailActivity : AppCompatActivity(), UserDetailViewModelDelegate {
 
         nickLabel.text = viewModel.nickname
         nameLabel.text = viewModel.name
+        lastConnectionLabel.text = viewModel.lastConnection
     }
 
     private fun showError() {

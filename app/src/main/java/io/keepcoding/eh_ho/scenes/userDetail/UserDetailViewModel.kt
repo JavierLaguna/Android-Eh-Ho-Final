@@ -8,6 +8,8 @@ import io.keepcoding.eh_ho.repositories.models.UserDetailResponse
 import io.keepcoding.eh_ho.repositories.services.DiscourseService
 import io.keepcoding.eh_ho.repositories.services.UsersServiceImpl
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class UserDetailViewModel(private val context: Application) : ViewModel() {
@@ -43,7 +45,16 @@ class UserDetailViewModel(private val context: Application) : ViewModel() {
                 DiscourseService.CallbackResponse<UserDetailResponse> {
 
                 override fun onResponse(response: UserDetailResponse) {
-                    println()
+                    response.userDetail?.let { userDetail ->
+
+                        userDetail.lastPostedAt?.let {
+                            val formatter =
+                                SimpleDateFormat("E, d MMM yyyy HH:mm", Locale.getDefault())
+                            lastConnection = formatter.format(it)
+                        }
+
+                        delegate?.updateUserInfo()
+                    }
                 }
 
                 override fun onFailure(t: Throwable, res: Response<*>?) {
