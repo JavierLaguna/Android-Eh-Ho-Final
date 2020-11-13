@@ -3,12 +3,14 @@ package io.keepcoding.eh_ho.scenes.users
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
+import android.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.models.User
-import io.keepcoding.eh_ho.scenes.posts.EXTRA_TOPIC
 import io.keepcoding.eh_ho.scenes.topics.TopicsActivity
 import io.keepcoding.eh_ho.scenes.userDetail.UserDetailActivity
 import io.keepcoding.eh_ho.utils.CustomViewModelFactory
@@ -37,6 +39,27 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
 
         initialize()
         setListeners()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_users, menu)
+
+        val search = menu?.findItem(R.id.topicsSearchBar)
+        val searchView = search?.actionView as SearchView
+        searchView.queryHint = getString(R.string.search)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.searchText = newText
+                return true
+            }
+        })
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun initialize() {
@@ -109,7 +132,7 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
 
     // UsersViewModelDelegate
     override fun updateUsers() {
-        usersAdapter.setUsers(viewModel.users)
+        usersAdapter.setUsers(viewModel.filteredUsers)
         showError(false)
         swipeRefresh.isRefreshing = false
     }
