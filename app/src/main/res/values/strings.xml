@@ -53,5 +53,8 @@
     <string name="search">Search</string>
     <string name="topics">Topics</string>
     <string name="users">Users</string>
+    <string name="badges">Badges</string>
+    <string name="moderator">Mod</string>
+    <string name="user">User</string>
 
 </resources>
