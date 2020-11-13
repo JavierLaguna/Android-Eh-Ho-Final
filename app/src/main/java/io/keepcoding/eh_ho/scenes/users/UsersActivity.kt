@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.models.User
+import io.keepcoding.eh_ho.scenes.posts.EXTRA_TOPIC
 import io.keepcoding.eh_ho.scenes.topics.TopicsActivity
 import io.keepcoding.eh_ho.scenes.userDetail.UserDetailActivity
 import io.keepcoding.eh_ho.utils.CustomViewModelFactory
@@ -76,6 +77,7 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
 
     private fun goToUserDetail(user: User) {
         Intent(this, UserDetailActivity::class.java).apply {
+            putExtra(UserDetailActivity.EXTRA_USER, user)
             startActivity(this)
         }
     }

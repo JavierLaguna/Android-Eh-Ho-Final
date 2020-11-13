@@ -2,6 +2,7 @@ package io.keepcoding.eh_ho.models
 
 import com.google.gson.annotations.SerializedName
 import io.keepcoding.eh_ho.BuildConfig
+import java.io.Serializable
 
 
 data class User(
@@ -32,8 +33,9 @@ data class User(
 
     @field:SerializedName("topic_count")
     val topicCount: Int? = null
-) {
+) : Serializable {
 
+    // Nested class
     data class UserInfo(
 
         @field:SerializedName("name")
@@ -50,7 +52,7 @@ data class User(
 
         @field:SerializedName("username")
         val username: String? = null
-    ) {
+    ) : Serializable {
 
         fun getAvatarURL(imageSize: Int = 100): String {
             val avatarUrl = avatarTemplate?.replace("{size}", imageSize.toString())
