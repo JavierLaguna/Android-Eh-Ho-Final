@@ -66,6 +66,8 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
         viewModel.delegate = this
         viewModel.initialize()
 
+        supportActionBar?.title = getString(R.string.users)
+
         listUsers.layoutManager = GridLayoutManager(this, 2)
         listUsers.adapter = usersAdapter
     }

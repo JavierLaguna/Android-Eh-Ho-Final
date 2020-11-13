@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_user_detail.*
 class UserDetailActivity : AppCompatActivity(), UserDetailViewModelDelegate {
 
     companion object {
-        val EXTRA_USER = "USER"
+        const val EXTRA_USER = "USER"
     }
 
     private val viewModel: UserDetailViewModel by lazy {
@@ -68,6 +68,8 @@ class UserDetailActivity : AppCompatActivity(), UserDetailViewModelDelegate {
 
         viewModel.delegate = this
         viewModel.initialize(user)
+
+        supportActionBar?.title = ""
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,

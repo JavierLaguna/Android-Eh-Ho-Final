@@ -4,6 +4,7 @@ import android.content.Context
 import android.nfc.tech.MifareUltralight
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -87,6 +88,8 @@ class PostsFragment(private val topic: Topic) : Fragment(), PostsViewModelDelega
     private fun initialize() {
         viewModel.delegate = this
         viewModel.initialize(topic)
+
+        (activity as AppCompatActivity).supportActionBar?.title = topic.title
 
         listPosts.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

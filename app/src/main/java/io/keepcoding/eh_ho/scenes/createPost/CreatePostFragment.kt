@@ -3,6 +3,7 @@ package io.keepcoding.eh_ho.scenes.createPost
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import io.keepcoding.eh_ho.R
@@ -15,10 +16,10 @@ import kotlinx.android.synthetic.main.fragment_create_post.*
 
 const val TAG_LOADING_DIALOG_CREATING_POST = "loading_dialog_creating_post"
 
-class CreatePostFragment(val topicId: String, val topicTitle: String) : Fragment() {
+class CreatePostFragment(val topicId: String, private val topicTitle: String) : Fragment() {
 
-    var createPostInteractionListener: CreatePostInteractionListener? = null
-    val loadingDialogFragment: LoadingDialogFragment by lazy {
+    private var createPostInteractionListener: CreatePostInteractionListener? = null
+    private val loadingDialogFragment: LoadingDialogFragment by lazy {
         val message = getString(R.string.label_creating_post)
         LoadingDialogFragment.newInstance(message)
     }
@@ -47,6 +48,8 @@ class CreatePostFragment(val topicId: String, val topicTitle: String) : Fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.reply_topic)
 
         labelTopicTitle.text = topicTitle
     }
