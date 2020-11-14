@@ -33,6 +33,10 @@ data class Post(
 
     fun formattedCreatedAt(): String {
         val format = SimpleDateFormat("EEEE, d MMM yyyy", Locale.getDefault())
-        return format.format(createdAt)
+
+        createdAt?.let {
+            return format.format(createdAt)
+        }
+        return ""
     }
 }

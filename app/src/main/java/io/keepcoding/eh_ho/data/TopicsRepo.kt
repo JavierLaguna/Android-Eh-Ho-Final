@@ -16,7 +16,6 @@ object TopicsRepo {
         onSuccess: (CreateTopicModel) -> Unit,
         onError: (RequestError) -> Unit
     ) {
-        val username = UserRepo.getUsername(context)
         val request = PostRequest(
             Request.Method.POST,
             ApiRouters.createTopic(),

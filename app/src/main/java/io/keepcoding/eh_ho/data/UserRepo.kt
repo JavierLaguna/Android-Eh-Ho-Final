@@ -22,7 +22,7 @@ object UserRepo {
             Request.Method.GET,
             ApiRouters.signIn(signInModel.username),
             null,
-            { response ->
+            { _ ->
                 success(signInModel)
                 saveSession(
                     context,
