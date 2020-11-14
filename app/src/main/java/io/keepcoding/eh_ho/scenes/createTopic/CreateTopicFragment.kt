@@ -3,6 +3,7 @@ package io.keepcoding.eh_ho.scenes.createTopic
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import io.keepcoding.eh_ho.R
@@ -18,8 +19,8 @@ const val TAG_LOADING_DIALOG = "loading_dialog"
 
 class CreateTopicFragment : Fragment() {
 
-    var createTopicInteractionListener: CreateTopicInteractionListener? = null
-    val loadingDialogFragment: LoadingDialogFragment by lazy {
+    private var createTopicInteractionListener: CreateTopicInteractionListener? = null
+    private val loadingDialogFragment: LoadingDialogFragment by lazy {
         val message = getString(R.string.label_creating_topic)
         LoadingDialogFragment.newInstance(message)
     }
@@ -44,6 +45,12 @@ class CreateTopicFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return container?.inflate(R.layout.fragment_create_topic)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.create_topic)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

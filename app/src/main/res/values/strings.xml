@@ -60,5 +60,7 @@
     <string name="replies">replies</string>
     <string name="gived">gived</string>
     <string name="received">received</string>
+    <string name="reply_topic">Reply topic</string>
+    <string name="create_topic">Create new topic</string>
 
 </resources>

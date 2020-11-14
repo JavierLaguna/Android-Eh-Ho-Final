@@ -11,14 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_username"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textColor="@color/colorBlackKC" />
 
     <EditText
         android:id="@+id/inputPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColor="@color/colorBlackKC" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonLogin"
@@ -36,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/label_create_new_account"
-        android:textAllCaps="true" />
+        android:textAllCaps="true"
+        android:textColor="@color/colorGrayKC" />
 
 </LinearLayout>
