@@ -51,6 +51,7 @@ Little Android client for consume `https://mdiscourse.keepcoding.io/` API
 ##### Topics
 
 - Paginated list of recent topic
+- Pull to refresh topics
 - Search topics
 - Create new topic
 - Toolbar menu for user logout
@@ -63,12 +64,14 @@ Little Android client for consume `https://mdiscourse.keepcoding.io/` API
 ##### Users
 
 - List users
+- Pull to refresh users
 - Search users
 - User detail view
 
 ## 🛠 Work in progress
 
 - Cache user objects on Room database.
+  > Branch ➡️ feature/cacheUsers
 
 ## 👨‍💻 Author
 
