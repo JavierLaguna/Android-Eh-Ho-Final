@@ -30,7 +30,7 @@ class UsersAdapter(private val userClickListener: ((User) -> Unit)?) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersAdapter.UserHolder {
         val view = parent.inflate(R.layout.item_user)
-        return UserHolder(view, parent.context)
+        return UserHolder(view)
     }
 
     override fun onBindViewHolder(holder: UsersAdapter.UserHolder, position: Int) {
@@ -47,8 +47,7 @@ class UsersAdapter(private val userClickListener: ((User) -> Unit)?) :
     }
 
     // ViewHolder
-    inner class UserHolder(itemView: View, context: Context) : RecyclerView.ViewHolder(itemView) {
-//        private val glide = Glide.with(context)
+    inner class UserHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var user: User? = null
             set(value) {
@@ -56,8 +55,11 @@ class UsersAdapter(private val userClickListener: ((User) -> Unit)?) :
                 itemView.tag = field
 
                 field?.let { user ->
-//                    val avatarUrl = user.userInfo?.getAvatarURL()
-//                    glide.load(avatarUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(itemView.imageUser)
+                    val avatarUrl = user.userInfo?.getAvatarURL()
+                    avatarUrl?.let {
+                        Glide.with(itemView.context).load(avatarUrl).diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(itemView.imageUser)
+                    }
 
                     itemView.userNameLabel.text = user.userInfo?.name ?: user.userInfo?.username
                 }
