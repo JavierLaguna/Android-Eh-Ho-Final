@@ -10,6 +10,9 @@ abstract class UsersDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertUser(user: User)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertAll(vararg users: User)
+
     @Query("SELECT * FROM users_table")
     abstract fun getAllUsers(): LiveData<List<User>>
 

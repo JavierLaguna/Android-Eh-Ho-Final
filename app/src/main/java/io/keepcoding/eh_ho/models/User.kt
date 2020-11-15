@@ -31,25 +31,24 @@ data class User(
     @field:SerializedName("likes_received")
     val likesReceived: Int? = null,
 
-    @field:SerializedName("user")
-    val userInfo: UserInfo? = null,
-
     @field:SerializedName("topic_count")
-    val topicCount: Int? = null
+    val topicCount: Int? = null,
+
+    @field:SerializedName("user")
+    val userInfo: UserInfo? = null
 
 ) : Serializable {
 
     // Nested class
+//    @Entity(tableName = "users_info_table")
     data class UserInfo(
 
-        @field:SerializedName("name")
-        val name: String? = null,
-
+//        @PrimaryKey
         @field:SerializedName("id")
         val id: Int? = null,
 
-        @field:SerializedName("title")
-        val title: Any? = null,
+        @field:SerializedName("name")
+        val name: String? = null,
 
         @field:SerializedName("avatar_template")
         val avatarTemplate: String? = null,

@@ -9,7 +9,7 @@ import io.keepcoding.eh_ho.models.User
 
 
 @Database(entities = [User::class], version = 1, exportSchema = false)
-//@TypeConverters(Converters::class)
+@TypeConverters(Converters::class)
 abstract class EhHoRoomDatabase : RoomDatabase() {
 
     abstract fun usersDao(): UsersDao
