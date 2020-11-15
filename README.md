@@ -36,6 +36,8 @@ Little Android client for consume `https://mdiscourse.keepcoding.io/` API
 
 [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) for observe database changes.
 
+[GitFlow](https://datasift.github.io/gitflow/IntroducingGitFlow.html) as Git methodology.
+
 > Legacy side of the app uses [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) as architecture and [Volley](https://github.com/google/volley) as networking library.
 
 ## ✅ App Features
