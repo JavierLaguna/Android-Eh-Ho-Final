@@ -27,6 +27,7 @@ class PostsFragment(private val topic: Topic) : Fragment(), PostsViewModelDelega
         fun onCreatePost()
     }
 
+    private val fetchNextPageOffset = 6
     private val viewModel: PostsViewModel by lazy {
         val factory = CustomViewModelFactory(activity!!.application, this)
         ViewModelProvider(this, factory).get(PostsViewModel::class.java)
@@ -117,8 +118,9 @@ class PostsFragment(private val topic: Topic) : Fragment(), PostsViewModelDelega
                     val firstVisibleItemPosition: Int =
                         (it as LinearLayoutManager).findFirstVisibleItemPosition()
 
-                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
-                        && firstVisibleItemPosition >= 0 && totalItemCount >= MifareUltralight.PAGE_SIZE
+                    if (visibleItemCount + firstVisibleItemPosition + fetchNextPageOffset >= totalItemCount
+                        && firstVisibleItemPosition >= 0
+                        && totalItemCount + fetchNextPageOffset >= MifareUltralight.PAGE_SIZE
                     ) {
                         viewModel.fetchMorePosts()
                     }
