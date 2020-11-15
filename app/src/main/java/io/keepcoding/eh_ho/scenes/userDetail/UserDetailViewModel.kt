@@ -21,6 +21,8 @@ class UserDetailViewModel(private val context: Application) : ViewModel() {
     var nickname = ""
     var name = ""
     var lastConnection = ""
+    var topicsCreated = "0"
+    var likesGiven = "0"
     var likesReceived = "0"
     var isMod = false
 
@@ -34,6 +36,9 @@ class UserDetailViewModel(private val context: Application) : ViewModel() {
         this.avatarUrl = user.userInfo?.getAvatarURL(185) ?: ""
         this.nickname = user.userInfo?.username ?: ""
         this.name = user.userInfo?.name ?: ""
+        this.topicsCreated = user.postCount.toString()
+        this.likesGiven = user.likesGiven.toString()
+        this.likesReceived = user.likesReceived.toString()
 
         delegate?.updateUserInfo()
     }
@@ -46,7 +51,6 @@ class UserDetailViewModel(private val context: Application) : ViewModel() {
 
                 override fun onResponse(response: UserDetailResponse) {
                     response.userDetail?.let { userDetail ->
-                        likesReceived = userDetail.profileViewCount.toString()
                         isMod = userDetail.moderator ?: false
                         userDetail.lastPostedAt?.let {
                             val formatter =
