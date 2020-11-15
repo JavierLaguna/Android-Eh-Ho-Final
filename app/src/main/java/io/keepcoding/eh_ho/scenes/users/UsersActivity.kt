@@ -64,6 +64,12 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onDestroy() {
+        viewModel.delegate = null
+
+        super.onDestroy()
+    }
+
     private fun initialize() {
         viewModel.delegate = this
         viewModel.initialize()

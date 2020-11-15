@@ -8,17 +8,17 @@ import io.keepcoding.eh_ho.models.User
 abstract class UsersDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertUser(user: User)
+    abstract fun insert(user: User)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertAll(vararg users: User)
+    abstract fun insert(users: List<User>)
 
-    @Query("SELECT * FROM users_table")
-    abstract fun getAllUsers(): LiveData<List<User>>
+    @Query("SELECT * FROM User")
+    abstract fun getAll(): LiveData<List<User>>
 
-    @Query("SELECT * FROM users_table WHERE id = :userId")
-    abstract fun getUser(userId: Int): LiveData<User?>
+    @Query("SELECT * FROM User WHERE id = :userId")
+    abstract fun getBy(userId: Int): LiveData<User?>
 
     @Delete
-    abstract fun deleteUser(user: User)
+    abstract fun delete(user: User)
 }

@@ -27,7 +27,6 @@ abstract class EhHoRoomDatabase : RoomDatabase() {
                             EhHoRoomDatabase::class.java,
                             "eh_ho_db"
                         )
-                        .allowMainThreadQueries()
                         .fallbackToDestructiveMigration()
                         .build()
                 }

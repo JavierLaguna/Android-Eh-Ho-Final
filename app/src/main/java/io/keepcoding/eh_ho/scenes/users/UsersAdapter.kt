@@ -48,7 +48,7 @@ class UsersAdapter(private val userClickListener: ((User) -> Unit)?) :
 
     // ViewHolder
     inner class UserHolder(itemView: View, context: Context) : RecyclerView.ViewHolder(itemView) {
-        private val glide = Glide.with(context)
+//        private val glide = Glide.with(context)
 
         var user: User? = null
             set(value) {
@@ -56,8 +56,8 @@ class UsersAdapter(private val userClickListener: ((User) -> Unit)?) :
                 itemView.tag = field
 
                 field?.let { user ->
-                    val avatarUrl = user.userInfo?.getAvatarURL()
-                    glide.load(avatarUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(itemView.imageUser)
+//                    val avatarUrl = user.userInfo?.getAvatarURL()
+//                    glide.load(avatarUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(itemView.imageUser)
 
                     itemView.userNameLabel.text = user.userInfo?.name ?: user.userInfo?.username
                 }

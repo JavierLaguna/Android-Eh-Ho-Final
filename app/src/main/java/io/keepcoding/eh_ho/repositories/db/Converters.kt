@@ -9,7 +9,6 @@ class Converters {
     @TypeConverter
     fun userInfoToJson(value: UserInfo) = Gson().toJson(value)
 
-
     @TypeConverter
     fun jsonToUserInfo(value: String) = Gson().fromJson(value, UserInfo::class.java)
 

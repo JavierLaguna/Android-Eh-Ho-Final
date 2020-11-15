@@ -1,7 +1,6 @@
 package io.keepcoding.eh_ho.scenes.users
 
 import android.app.Application
-import android.os.AsyncTask
 import androidx.lifecycle.ViewModel
 import io.keepcoding.eh_ho.models.Period
 import io.keepcoding.eh_ho.models.User
@@ -10,6 +9,7 @@ import io.keepcoding.eh_ho.repositories.db.EhHoRoomDatabase
 import io.keepcoding.eh_ho.repositories.models.UsersResponse
 import io.keepcoding.eh_ho.repositories.services.DiscourseService
 import io.keepcoding.eh_ho.repositories.services.UsersServiceImpl
+import io.keepcoding.eh_ho.utils.DoAsync
 import retrofit2.Response
 import java.util.*
 
@@ -80,24 +80,9 @@ class UsersViewModel(private val context: Application) : ViewModel() {
     }
 
     private fun saveUsers(users: List<User>) {
-//        usersLocalRepository.insertAll(*users.toTypedArray())
-        users.forEach {
-            usersLocalRepository.insertUser(it)
-        }
-
-//        println()
-//
-//        class doAsync(val handler: () -> Unit) : AsyncTask<Void, Void, Void>() {
-//            override fun doInBackground(vararg params: Void?): Void? {
-//                handler()
-//                return null
-//            }
-//        }
-//
-//        doAsync {
-//            users.forEach {
-//                usersLocalRepository.insertUser(it)
-//            }
-//        }.execute()
+        DoAsync {
+            usersLocalRepository.insert(users)
+        }.execute()
     }
 }
+
