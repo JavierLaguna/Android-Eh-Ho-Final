@@ -6,13 +6,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import io.keepcoding.eh_ho.models.User
+import io.keepcoding.eh_ho.models.UserDetail
 
 
-@Database(entities = [User::class], version = 1, exportSchema = false)
+@Database(entities = [User::class, UserDetail::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class EhHoRoomDatabase : RoomDatabase() {
 
     abstract fun usersDao(): UsersDao
+    abstract fun userDetailDao(): UserDetailDao
 
     companion object {
         private var instance: EhHoRoomDatabase? = null

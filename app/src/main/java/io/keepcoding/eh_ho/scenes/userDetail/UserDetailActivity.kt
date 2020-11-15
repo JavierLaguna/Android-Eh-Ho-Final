@@ -12,6 +12,7 @@ import android.view.animation.AnticipateOvershootInterpolator
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.models.User
@@ -78,7 +79,10 @@ class UserDetailActivity : AppCompatActivity(), UserDetailViewModelDelegate {
     }
 
     private fun setUserInfoUI() {
-        Glide.with(this).load(viewModel.avatarUrl).into(userAvatarImage)
+        Glide.with(this)
+            .load(viewModel.avatarUrl)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(userAvatarImage)
 
         nickLabel.text = viewModel.nickname
         nameLabel.text = viewModel.name

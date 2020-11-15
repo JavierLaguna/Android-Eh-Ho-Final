@@ -63,7 +63,9 @@ class UsersViewModel(context: Application, private val owner: LifecycleOwner) : 
             if (it.isNotEmpty()) {
                 users.clear()
                 users.addAll(it)
+
                 delegate?.updateUsers()
+                isLoading = false
             }
         })
     }
@@ -78,8 +80,6 @@ class UsersViewModel(context: Application, private val owner: LifecycleOwner) : 
                 response.users?.let {
                     saveUsers(it)
                 }
-
-                isLoading = false
             }
 
             override fun onFailure(t: Throwable, res: Response<*>?) {

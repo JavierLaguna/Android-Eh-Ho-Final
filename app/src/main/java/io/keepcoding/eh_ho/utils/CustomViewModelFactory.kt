@@ -22,7 +22,7 @@ class CustomViewModelFactory(
                 isAssignableFrom(TopicsViewModel::class.java) -> TopicsViewModel(application)
                 isAssignableFrom(PostsViewModel::class.java) -> PostsViewModel(application)
                 isAssignableFrom(UsersViewModel::class.java) -> UsersViewModel(application, owner)
-                isAssignableFrom(UserDetailViewModel::class.java) -> UserDetailViewModel(application)
+                isAssignableFrom(UserDetailViewModel::class.java) -> UserDetailViewModel(application, owner)
                 else -> throw IllegalArgumentException("Unknown ViewModel")
             }
         } as T

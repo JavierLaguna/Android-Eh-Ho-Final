@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import io.keepcoding.eh_ho.models.User
 
+
 @Dao
 abstract class UsersDao {
 

@@ -54,13 +54,15 @@ class UsersAdapter(private val userClickListener: ((User) -> Unit)?) :
                 itemView.tag = field
 
                 field?.let { user ->
+                    itemView.userNameLabel.text = user.userInfo?.name ?: user.userInfo?.username
+
                     val avatarUrl = user.userInfo?.getAvatarURL()
                     avatarUrl?.let {
-                        Glide.with(itemView.context).load(avatarUrl).diskCacheStrategy(DiskCacheStrategy.ALL)
+                        Glide.with(itemView.context)
+                            .load(avatarUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(itemView.imageUser)
                     }
-
-                    itemView.userNameLabel.text = user.userInfo?.name ?: user.userInfo?.username
                 }
             }
     }

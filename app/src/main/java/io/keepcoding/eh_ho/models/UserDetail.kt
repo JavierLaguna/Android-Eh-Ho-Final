@@ -1,11 +1,17 @@
 package io.keepcoding.eh_ho.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
 
-
+@Entity
 data class UserDetail(
+
+    @PrimaryKey
+    @field:SerializedName("id")
+    val id: Int? = null,
 
     @field:SerializedName("recent_time_read")
     val recentTimeRead: Int? = null,
@@ -18,9 +24,6 @@ data class UserDetail(
 
     @field:SerializedName("can_send_private_messages")
     val canSendPrivateMessages: Boolean? = null,
-
-    @field:SerializedName("id")
-    val id: Int? = null,
 
     @field:SerializedName("second_factor_enabled")
     val secondFactorEnabled: Boolean? = null,
@@ -42,9 +45,6 @@ data class UserDetail(
 
     @field:SerializedName("profile_view_count")
     val profileViewCount: Int? = null,
-
-    @field:SerializedName("featured_user_badge_ids")
-    val featuredUserBadgeIds: List<Int?>? = null,
 
     @field:SerializedName("custom_avatar_upload_id")
     val customAvatarUploadId: Int? = null,
