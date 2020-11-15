@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.models.User
 import io.keepcoding.eh_ho.utils.inflate
@@ -48,6 +49,7 @@ class UsersAdapter(private val userClickListener: ((User) -> Unit)?) :
     // ViewHolder
     inner class UserHolder(itemView: View, context: Context) : RecyclerView.ViewHolder(itemView) {
         private val glide = Glide.with(context)
+
         var user: User? = null
             set(value) {
                 field = value
@@ -55,7 +57,7 @@ class UsersAdapter(private val userClickListener: ((User) -> Unit)?) :
 
                 field?.let { user ->
                     val avatarUrl = user.userInfo?.getAvatarURL()
-                    glide.load(avatarUrl).into(itemView.imageUser)
+                    glide.load(avatarUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(itemView.imageUser)
 
                     itemView.userNameLabel.text = user.userInfo?.name ?: user.userInfo?.username
                 }

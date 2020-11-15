@@ -81,23 +81,23 @@ class UsersViewModel(private val context: Application) : ViewModel() {
 
     private fun saveUsers(users: List<User>) {
 //        usersLocalRepository.insertAll(*users.toTypedArray())
-//        users.forEach {
-//            usersLocalRepository.insertUser(it)
-//        }
-
-println()
-
-        class doAsync(val handler: () -> Unit) : AsyncTask<Void, Void, Void>() {
-            override fun doInBackground(vararg params: Void?): Void? {
-                handler()
-                return null
-            }
+        users.forEach {
+            usersLocalRepository.insertUser(it)
         }
 
-        doAsync {
-            users.forEach {
-                usersLocalRepository.insertUser(it)
-            }
-        }.execute()
+//        println()
+//
+//        class doAsync(val handler: () -> Unit) : AsyncTask<Void, Void, Void>() {
+//            override fun doInBackground(vararg params: Void?): Void? {
+//                handler()
+//                return null
+//            }
+//        }
+//
+//        doAsync {
+//            users.forEach {
+//                usersLocalRepository.insertUser(it)
+//            }
+//        }.execute()
     }
 }

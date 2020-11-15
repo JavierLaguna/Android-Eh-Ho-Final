@@ -3,7 +3,6 @@ package io.keepcoding.eh_ho.models
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import io.keepcoding.eh_ho.BuildConfig
 import java.io.Serializable
 
 @Entity(tableName = "users_table")
@@ -37,29 +36,4 @@ data class User(
     @field:SerializedName("user")
     val userInfo: UserInfo? = null
 
-) : Serializable {
-
-    // Nested class
-//    @Entity(tableName = "users_info_table")
-    data class UserInfo(
-
-//        @PrimaryKey
-        @field:SerializedName("id")
-        val id: Int? = null,
-
-        @field:SerializedName("name")
-        val name: String? = null,
-
-        @field:SerializedName("avatar_template")
-        val avatarTemplate: String? = null,
-
-        @field:SerializedName("username")
-        val username: String? = null
-    ) : Serializable {
-
-        fun getAvatarURL(imageSize: Int = 100): String {
-            val avatarUrl = avatarTemplate?.replace("{size}", imageSize.toString())
-            return "${BuildConfig.DiscourseDomain}$avatarUrl"
-        }
-    }
-}
+) : Serializable
