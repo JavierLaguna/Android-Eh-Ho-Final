@@ -21,7 +21,7 @@ class CustomViewModelFactory(
             when {
                 isAssignableFrom(TopicsViewModel::class.java) -> TopicsViewModel(application)
                 isAssignableFrom(PostsViewModel::class.java) -> PostsViewModel(application)
-                isAssignableFrom(UsersViewModel::class.java) -> UsersViewModel(application)
+                isAssignableFrom(UsersViewModel::class.java) -> UsersViewModel(application, owner)
                 isAssignableFrom(UserDetailViewModel::class.java) -> UserDetailViewModel(application)
                 else -> throw IllegalArgumentException("Unknown ViewModel")
             }
