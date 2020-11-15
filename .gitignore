@@ -39,7 +39,7 @@ proguard/
 .navigation/
 
 # Android Studio captures folder
-screenCaptures/
+# screenCaptures/
 
 # IntelliJ
 *.iml

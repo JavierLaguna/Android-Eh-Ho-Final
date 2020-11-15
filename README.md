@@ -1,42 +1,75 @@
-# Eh-Ho-Android
+# 📱 Eh-Ho Android
 
 [![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)
 
-> Eh-Ho-Android is a practice of 'fundamentos-android' for KeepCoding Mobile 10
-
-![Splash](/screenCaptures/login.png)
-![Topics](/screenCaptures/topics.png)
-![Users](/screenCaptures/posts.png)
-
-## Application Structure
+## 📝 Description
 
 Little Android client for consume `https://mdiscourse.keepcoding.io/` API
 
-[Kotlin](https://kotlinlang.org/) app.
+> Final Android Practice for KeepCoding Mobile 10
 
-App Features:
+## 📷 Screenshots
 
-###### Sign Up and Sign In
-   - Change between sign up and sign in view with validations on the forms
-   - Auto-login saving user on SharedPreferences
-   - Logout
+![Login](/screenCaptures/login.png)
+![Register](/screenCaptures/register.png)
 
-###### Topics
-   - List recent topic (Swipe to refresh)
-   - Create new topic
-   - Loading placeholder while load topics
-   - Retry system when load topics fails
-   - Animated floating button when scroll topic list
+![Topics](/screenCaptures/topics.png)
+![Search Topic](/screenCaptures/search_topic.png)
+![Create Topic](/screenCaptures/create_topic.png)
 
-###### Posts
-   - List posts of a specific topic (Swipe to refresh)
-   - Create new post for a topic
-   - Loading placeholder while load posts
-   - Retry system when load posts fails
+![Topic Detial](/screenCaptures/topic_detail.png)
+![Reply Topic](/screenCaptures/reply_topic.png)
 
-###### UnitTest
-   - Mapping Json to objects
-   - Mapping objects to Json
+![Users](/screenCaptures/users.png)
+![Search User](/screenCaptures/search_user.png)
+![User Detail](/screenCaptures/user_detail.png)
 
-##### Author
+## 🚧 Application Architecture
+
+[Kotlin](https://kotlinlang.org/) app based on ([MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) + [Delegate Pattern](https://en.wikipedia.org/wiki/Delegation_pattern)) as main architecture.
+
+[Retrofit](https://square.github.io/retrofit/) as networking library.
+
+[Glide](https://bumptech.github.io/glide/) as image loading library.
+
+[Room](https://developer.android.com/topic/libraries/architecture/room) for local database.
+
+[LiveData](https://developer.android.com/topic/libraries/architecture/livedata) for observe database changes.
+
+> Legacy side of the app uses [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) as architecture and [Volley](https://github.com/google/volley) as networking library.
+
+## ✅ App Features
+
+##### Register
+
+- Register new users
+
+##### Login
+
+- Login for registered users
+
+##### Topics
+
+- Paginated list of recent topic
+- Search topics
+- Create new topic
+- Toolbar menu for user logout
+
+##### Posts
+
+- Topic detail with paginated list of posts
+- Reply topic using post
+
+##### Users
+
+- List users
+- Search users
+- User detail view
+
+## 🛠 Work in progress
+
+- Cache user objects on Room database.
+
+## 👨‍💻 Author
+
 > Javier Laguna
