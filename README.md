@@ -1,12 +1,12 @@
-# 📱 Eh-Ho iOS
+# 📱 Eh-Ho Android
 
 [![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)
 
 ## 📝 Description
 
-Little iOS client for consume `https://mdiscourse.keepcoding.io/` API
+Little Android client for consume `https://mdiscourse.keepcoding.io/` API
 
-> Final iOS Practice for KeepCoding Mobile 10
+> Final Android Practice for KeepCoding Mobile 10
 
 ## 📷 Screenshots
 
@@ -26,11 +26,17 @@ Little iOS client for consume `https://mdiscourse.keepcoding.io/` API
 
 ## 🚧 Application Architecture
 
-[Swift](https://developer.apple.com/swift/) app based on ([MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) + [Coordinators](https://blog.kulman.sk/architecting-ios-apps-coordinators/)) as main architecture.
+[Kotlin](https://kotlinlang.org/) app based on ([MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) + [Delegate Pattern](https://en.wikipedia.org/wiki/Delegation_pattern)) as main architecture.
 
-[URLSession](https://developer.apple.com/documentation/foundation/urlsession) as networking layer.
+[Retrofit](https://square.github.io/retrofit/) as networking library.
 
-[GitFlow](https://datasift.github.io/gitflow/IntroducingGitFlow.html) as Git methodology.
+[Glide](https://bumptech.github.io/glide/) as image loading library.
+
+[Room](https://developer.android.com/topic/libraries/architecture/room) for local database.
+
+[LiveData](https://developer.android.com/topic/libraries/architecture/livedata) for observe database changes.
+
+> Legacy side of the app uses [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) as architecture and [Volley](https://github.com/google/volley) as networking library.
 
 ## ✅ App Features
 
@@ -47,7 +53,7 @@ Little iOS client for consume `https://mdiscourse.keepcoding.io/` API
 - Paginated list of recent topic
 - Search topics
 - Create new topic
-- Delete topic
+- Toolbar menu for user logout
 
 ##### Posts
 
@@ -60,17 +66,9 @@ Little iOS client for consume `https://mdiscourse.keepcoding.io/` API
 - Search users
 - User detail view
 
-##### Categories
-
-- List all categories
-
-##### Settings
-
-- User logout
-
 ## 🛠 Work in progress
 
-//
+- Cache user objects on Room database.
 
 ## 👨‍💻 Author
 
