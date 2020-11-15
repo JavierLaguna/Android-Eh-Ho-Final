@@ -83,6 +83,8 @@ class UserDetailActivity : AppCompatActivity(), UserDetailViewModelDelegate {
         nickLabel.text = viewModel.nickname
         nameLabel.text = viewModel.name
         lastConnectionLabel.text = viewModel.lastConnection
+        topicsCreatedLabel.text = viewModel.topicsCreated
+        likesLabel.text = viewModel.likesGiven
         myLikesLabel.text = viewModel.likesReceived
 
         if (viewModel.isMod) {
