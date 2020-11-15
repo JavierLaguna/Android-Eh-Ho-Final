@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.AttributeSet
 import android.view.*
 import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -115,6 +116,8 @@ class TopicsFragment : Fragment(), TopicsViewModelDelegate {
 
     private fun initialize() {
         viewModel.delegate = this
+
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.app_name)
 
         listTopics.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
