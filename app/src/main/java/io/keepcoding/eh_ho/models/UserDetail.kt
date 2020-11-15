@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
 
+
 data class UserDetail(
 
     @field:SerializedName("recent_time_read")

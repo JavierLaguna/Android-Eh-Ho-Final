@@ -1,11 +1,17 @@
 package io.keepcoding.eh_ho.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import io.keepcoding.eh_ho.BuildConfig
 import java.io.Serializable
 
-
+@Entity(tableName = "users_table")
 data class User(
+
+    @PrimaryKey
+    @field:SerializedName("id")
+    val id: Int? = null,
 
     @field:SerializedName("days_visited")
     val daysVisited: Int? = null,
@@ -15,9 +21,6 @@ data class User(
 
     @field:SerializedName("topics_entered")
     val topicsEntered: Int? = null,
-
-    @field:SerializedName("id")
-    val id: Int? = null,
 
     @field:SerializedName("likes_given")
     val likesGiven: Int? = null,
@@ -33,6 +36,7 @@ data class User(
 
     @field:SerializedName("topic_count")
     val topicCount: Int? = null
+
 ) : Serializable {
 
     // Nested class
