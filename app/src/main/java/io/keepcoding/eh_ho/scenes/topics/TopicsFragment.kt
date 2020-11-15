@@ -32,6 +32,7 @@ class TopicsFragment : Fragment(), TopicsViewModelDelegate {
         fun onLogout()
     }
 
+    private val fetchNextPageOffset = 6
     private val viewModel: TopicsViewModel by lazy {
         val factory = CustomViewModelFactory(activity!!.application, this)
         ViewModelProvider(this, factory).get(TopicsViewModel::class.java)
@@ -150,8 +151,9 @@ class TopicsFragment : Fragment(), TopicsViewModelDelegate {
                     val firstVisibleItemPosition: Int =
                         (it as LinearLayoutManager).findFirstVisibleItemPosition()
 
-                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
-                        && firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE
+                    if (visibleItemCount + firstVisibleItemPosition + fetchNextPageOffset >= totalItemCount
+                        && firstVisibleItemPosition >= 0
+                        && totalItemCount + fetchNextPageOffset >= PAGE_SIZE
                     ) {
                         viewModel.fetchMoreTopics()
                     }
