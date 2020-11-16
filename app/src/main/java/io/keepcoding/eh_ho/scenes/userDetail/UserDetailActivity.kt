@@ -55,8 +55,8 @@ class UserDetailActivity : AppCompatActivity(), UserDetailViewModelDelegate {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val enterTransition = Slide()
-        enterTransition.slideEdge = Gravity.RIGHT
-        enterTransition.duration = 1000
+        enterTransition.slideEdge = Gravity.BOTTOM
+        enterTransition.duration = 800
         enterTransition.interpolator = AnticipateOvershootInterpolator()
         window.enterTransition = enterTransition
 

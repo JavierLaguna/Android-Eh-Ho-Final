@@ -1,5 +1,6 @@
 package io.keepcoding.eh_ho.scenes.users
 
+import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_users.swipeRefresh
 import kotlinx.android.synthetic.main.activity_users.viewError
 import kotlinx.android.synthetic.main.activity_users.viewLoading
 import kotlinx.android.synthetic.main.view_error.*
+
 
 class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
 
@@ -101,9 +103,16 @@ class UsersActivity : AppCompatActivity(), UsersViewModelDelegate {
     }
 
     private fun goToUserDetail(user: User) {
-        Intent(this, UserDetailActivity::class.java).apply {
+        val detailActivity = Intent(this, UserDetailActivity::class.java).apply {
             putExtra(UserDetailActivity.EXTRA_USER, user)
-            startActivity(this)
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            val options = ActivityOptions.makeSceneTransitionAnimation(this)
+            startActivity(detailActivity, options.toBundle())
+
+        } else {
+            startActivity(detailActivity)
         }
     }
 
