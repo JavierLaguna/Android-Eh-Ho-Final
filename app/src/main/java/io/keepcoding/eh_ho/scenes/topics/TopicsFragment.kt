@@ -109,10 +109,10 @@ class TopicsFragment : Fragment(), TopicsViewModelDelegate {
     }
 
     override fun onDetach() {
-        super.onDetach()
-
         topicsInteractionListener = null
         viewModel.delegate = null
+
+        super.onDetach()
     }
 
     private fun initialize() {

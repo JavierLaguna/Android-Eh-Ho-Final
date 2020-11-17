@@ -71,6 +71,7 @@ Little Android client for consume `https://mdiscourse.keepcoding.io/` API
 
 ##### Users
 
+- Cache user objects on Room database.
 - List users
 - Pull to refresh users
 - Search users
@@ -78,8 +79,7 @@ Little Android client for consume `https://mdiscourse.keepcoding.io/` API
 
 ## 🛠 Work in progress
 
-- Cache user objects on Room database.
-  > Branch ➡️ feature/cacheUsers
+//
 
 ## 👨‍💻 Author
 
