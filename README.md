@@ -24,6 +24,12 @@ Little Android client for consume `https://mdiscourse.keepcoding.io/` API
 ![Search User](/screenCaptures/search_user.png)
 ![User Detail](/screenCaptures/user_detail.png)
 
+## 🚩 Instructions
+
+- Run tests
+
+> \$ ./gradlew test
+
 ## 🚧 Application Architecture
 
 [Kotlin](https://kotlinlang.org/) app based on ([MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) + [Delegate Pattern](https://en.wikipedia.org/wiki/Delegation_pattern)) as main architecture.
