@@ -50,5 +50,17 @@
     <string name="label_post_author">Author</string>
     <string name="label_create_post">Create post</string>
     <string name="label_creating_post">Creating post</string>
+    <string name="search">Search</string>
+    <string name="topics">Topics</string>
+    <string name="users">Users</string>
+    <string name="badges">Badges</string>
+    <string name="moderator">Mod</string>
+    <string name="user">User</string>
+    <string name="created">created</string>
+    <string name="replies">replies</string>
+    <string name="gived">gived</string>
+    <string name="received">received</string>
+    <string name="reply_topic">Reply topic</string>
+    <string name="create_topic">Create new topic</string>
 
 </resources>

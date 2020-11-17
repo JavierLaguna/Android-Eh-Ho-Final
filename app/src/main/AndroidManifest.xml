@@ -3,6 +3,8 @@
     package="io.keepcoding.eh_ho">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,15 +13,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".login.LoginActivity">
+
+        <activity
+            android:name=".scenes.login.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".topics.TopicsActivity" />
-        <activity android:name=".posts.PostsActivity" />
+
+        <activity
+            android:name=".scenes.topics.TopicsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".scenes.posts.PostsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".scenes.users.UsersActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".scenes.userDetail.UserDetailActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

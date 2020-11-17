@@ -11,28 +11,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_email"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:textColor="@color/colorBlackKC" />
 
     <EditText
         android:id="@+id/inputUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_username"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textColor="@color/colorBlackKC" />
 
     <EditText
         android:id="@+id/inputPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColor="@color/colorBlackKC" />
 
     <EditText
         android:id="@+id/inputConfirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_confirm_password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColor="@color/colorBlackKC" />
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -51,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/label_sign_in"
-        android:textAllCaps="true" />
+        android:textAllCaps="true"
+        android:textColor="@color/colorGrayKC" />
 
 </LinearLayout>
